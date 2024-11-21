@@ -1,11 +1,12 @@
 # Creamos la clase
 class Jugador:
     # Definimos el constructor
-    def __init__(self, nombre, vidas, puntos) -> None:
+    def __init__(self, nombre, vidas, puntos, dificultad) -> None:
         # Atributos
         self.nombre = nombre
         self.vidas = vidas
         self.puntos = puntos
+        self.dificultad = dificultad
 
     # Getters
     def get_nombre(self):
@@ -14,12 +15,16 @@ class Jugador:
         return self.vidas
     def get_puntos(self):
         return self.puntos
+    def get_dificultad(self):
+        return self.dificultad
     
     # Setters
     def set_nombre(self, nombre):
         self.nombre = nombre
-    def set_(self, vidas):
+    def set_vidas(self, vidas):
         self.vidas = vidas
-    def set_(self, puntos):
+    def set_puntos(self, puntos):
         self.puntos = puntos
+    def set_dificultad(self, dificultad):
+        self.dificultad = dificultad
 
