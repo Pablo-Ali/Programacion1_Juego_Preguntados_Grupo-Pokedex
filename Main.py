@@ -1,10 +1,10 @@
 import pygame
-import Constantes
-import Pantalla_configuracion
-import Pantalla_juego
-import Pantalla_menu
-import Pantalla_partida_finalizada
-import Pantalla_rankings
+import constantes
+import pantalla_configuracion
+import pantalla_juego
+import pantalla_menu
+import pantalla_partida_finalizada
+import pantalla_rankings
 
 # Inicializamos pygame
 pygame.init()
@@ -17,7 +17,7 @@ icono = pygame.image.load("Recursos/Imagenes/pokeball.png")
 pygame.display.set_icon(icono)
 
 # Creamos la pantalla
-pantalla = pygame.display.set_mode(Constantes.VENTANA)
+pantalla = pygame.display.set_mode(constantes.VENTANA)
 
 # Creamos reloj
 reloj = pygame.time.Clock()
@@ -38,7 +38,7 @@ while corriendo:
     cola_eventos = pygame.event.get()
 
     # Iniciamos el reloj
-    reloj.tick(Constantes.FPS)
+    reloj.tick(constantes.FPS)
 
     # Verificamos la pantalla a mostrar
 
