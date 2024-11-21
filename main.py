@@ -13,7 +13,7 @@ pygame.init()
 pygame.display.set_caption("Preguntados Pokédex")
 
 # Ícono del juego
-icono = pygame.image.load("Recursos/Imagenes/pokeball.png")
+icono = pygame.image.load("recursos/imagenes/pokeball.png")
 pygame.display.set_icon(icono)
 
 # Creamos la pantalla
