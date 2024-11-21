@@ -1,5 +1,5 @@
 import pygame
-import Constantes
-import Funciones_generales
+import constantes
+import funciones_generales
 
 pygame.init()
