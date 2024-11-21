@@ -5,6 +5,7 @@ import pantalla_juego
 import pantalla_menu
 import pantalla_partida_finalizada
 import pantalla_rankings
+import jugador
 
 # Inicializamos pygame
 pygame.init()
@@ -44,7 +45,7 @@ while corriendo:
 
     match pantalla_actual:
         case "menu":
-            pass
+            pantalla_actual = pantalla_menu.mostrar_menu(pantalla,cola_eventos)
         case "juego":
             pass
         case "configuraciones":
