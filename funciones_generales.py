@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 def mostrar_texto(surface, text, pos, font, color=pygame.Color('black')):
     '''
     
@@ -26,3 +27,32 @@ def mezclar_lista(lista:list) -> None:
 
     '''
     random.shuffle(lista)
+
+def generar_flotante_musica(volumen : int) -> float:
+    '''
+    
+    '''
+    # Generamos un flotante a partir del entero cargado en el jugador
+    volumen_float = volumen / 1000 # dividimos por 1000 ya que el volumen es demasiado alto
+
+    return volumen_float
+
+def iniciar_musica(ruta : str, volumen : int) -> None:
+    '''
+    
+    '''
+    # Generamos el float del volumen
+    volumen_float = generar_flotante_musica(volumen)
+    #Cargamos la pista musical
+    pygame.mixer.music.load(ruta)
+    # Seteamos el volumen
+    pygame.mixer.music.set_volume(volumen_float)
+    # La reproducimos en bucle
+    pygame.mixer.music.play(-1)
+
+def cambiar_volumen_musica(volumen : int) -> None:
+    '''
+    '''
+    volumen_float = generar_flotante_musica(volumen)
+    pygame.mixer.music.set_volume(volumen_float)
+
