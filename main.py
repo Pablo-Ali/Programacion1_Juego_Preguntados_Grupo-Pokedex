@@ -1,5 +1,6 @@
 import pygame
 import constantes
+import funciones_generales
 import pantalla_configuracion
 import pantalla_juego
 import pantalla_menu
@@ -23,14 +24,19 @@ pantalla = pygame.display.set_mode(constantes.VENTANA)
 # Creamos reloj
 reloj = pygame.time.Clock()
 
-# Creamos los datos del juego (sea con un diccionario, sea con la instanciación de una clase) 
+# Creamos al jugador
+jugador = jugador.Jugador("", 3, 0, 50, True, True)
 
 # Inicializamos mixer para la música
 pygame.mixer.init()
 
 # Banderas
 corriendo = True
-bandera_musica = False
+musica_menu = False
+musica_juego = False
+musica_configuraciones = False
+musica_rankings = False
+musica_terminado = False
 pantalla_actual = "menu"
 
 # Iniciamos el bucle principal
@@ -42,18 +48,36 @@ while corriendo:
     reloj.tick(constantes.FPS)
 
     # Verificamos la pantalla a mostrar
-
     match pantalla_actual:
         case "menu":
-            pantalla_actual = pantalla_menu.mostrar_menu(pantalla,cola_eventos)
+            # Verificamos que la música esté activada y la reproducimos
+            if musica_menu == False:
+                funciones_generales.iniciar_musica(constantes.MUSICA_MENU, jugador.get_volumen_musica())
+                musica_encendida = True
+
+            # Llamamos a la función que ejecuta la pantalla
+            pantalla_actual = pantalla_menu.mostrar_menu(pantalla, cola_eventos)
+
         case "juego":
-            pass
+            if musica_juego == False:
+                funciones_generales.iniciar_musica(constantes.MUSICA_JUEGO, jugador.get_volumen_musica())
+                musica_encendida = True
+
         case "configuraciones":
-            pass
+            if musica_configuraciones == False:
+                funciones_generales.iniciar_musica(constantes.MUSICA_CONFIGURACION, jugador.get_volumen_musica())
+                musica_encendida = True
+
         case "rankings":
-            pass
+            if musica_rankings == False:
+                funciones_generales.iniciar_musica(constantes.MUSICA_RANKINGS, jugador.get_volumen_musica())
+                musica_encendida = True
+
         case "terminado":
-            pass
+            if musica_terminado == False:
+                funciones_generales.iniciar_musica(constantes.MUSICA_PARTIDA_FINALIZADA, jugador.get_volumen_musica())
+                musica_encendida = True
+
         case "salir":
             corriendo = False
     
