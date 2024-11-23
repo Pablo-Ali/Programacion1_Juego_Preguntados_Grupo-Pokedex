@@ -6,10 +6,7 @@ pygame.init()
 
 pygame.init()
 
-boton_volver = {}
-imagen_original = boton_volver["superficie"] = pygame.image.load(constantes.RUTA_IMAGEN_BOTON_CONFIG)
-boton_volver["superficie"] = pygame.transform.scale(imagen_original, (192, 120)) # 10%
-boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
+boton_volver = funciones_generales.crear_boton_volver()
 
 def mostrar_juego(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]) -> str:
     pygame.display.set_caption("JUGAR")
@@ -26,6 +23,5 @@ def mostrar_juego(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]
 
     pantalla.blit(constantes.FONDO_JUEGO, (0, 0))
 
-    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(600, 400))
-    funciones_generales.mostrar_texto(boton_volver["superficie"],"VOLVER",(50, 50),constantes.FUENTE_30,constantes.COLOR_NEGRO)
+    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],constantes.POS_BOTON_VOLVER)
     return retorno

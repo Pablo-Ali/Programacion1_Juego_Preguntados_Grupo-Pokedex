@@ -7,6 +7,7 @@ ANCHO = 800
 ALTO = 600
 VENTANA = (ANCHO,ALTO)
 FPS = 60
+POS_BOTON_VOLVER = (675, 25)
 
 # Jugador
 CANTIDAD_VIDAS = 3
@@ -15,7 +16,7 @@ PUNTUACION_ERROR = 50
 
 # Fondos
 FONDO_MENU = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondo_9.jpg"), VENTANA)
-FONDO_CONFIGURACIONES = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondo_3.jpg"), VENTANA)
+FONDO_CONFIGURACIONES = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondo_10.jpg"), VENTANA)
 FONDO_JUEGO = pygame.transform.scale(pygame.image.load("recursos/imagenes/estadio.jpg"), VENTANA)
 FONDO_RANKINGS = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondo_7.jpg"), VENTANA)
 
@@ -30,13 +31,13 @@ BOTON_SALIR = 3
 
 # Imagenes
 RUTA_IMAGENES_BOTONES_MENU = [
-    "recursos/imagenes/carta_fuego.png",
-    "recursos/imagenes/carta_agua.png",
-    "recursos/imagenes/carta_electrico.png",
-    "recursos/imagenes/carta_psiquico.png"
+    "recursos/imagenes/boton_jugar.png",
+    "recursos/imagenes/boton_rankings.png",
+    "recursos/imagenes/boton_configuracion.png",
+    "recursos/imagenes/boton_salir.png"
 ]
 
-RUTA_IMAGEN_BOTON_CONFIG = "recursos/imagenes/fondo_10.jpg"
+RUTA_IMAGEN_BOTON_VOLVER = "recursos/imagenes/volver.png"
 
 RUTA_IMAGENES_RESPUESTAS = [
     "recursos/imagenes/" #COMPLETAR

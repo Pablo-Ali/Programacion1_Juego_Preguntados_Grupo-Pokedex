@@ -25,7 +25,7 @@ pantalla = pygame.display.set_mode(constantes.VENTANA)
 reloj = pygame.time.Clock()
 
 # Creamos al jugador
-jugador = jugador.Jugador("", 3, 0, 100, True, True)
+jugador = jugador.Jugador("", 3, 0, 30, True, True)
 
 # Inicializamos mixer para la música
 pygame.mixer.init()

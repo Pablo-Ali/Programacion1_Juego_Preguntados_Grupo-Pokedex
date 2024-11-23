@@ -1,5 +1,6 @@
 import pygame
 import random
+import constantes
 
 
 def mostrar_texto(surface, text, pos, font, color=pygame.Color('black')):
@@ -58,3 +59,13 @@ def cambiar_volumen_musica(volumen : int) -> None:
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
 
+def crear_boton_volver() -> dict:
+    boton_volver = {}
+    imagen_original = boton_volver["superficie"] = pygame.image.load(constantes.RUTA_IMAGEN_BOTON_VOLVER)
+    boton_volver["superficie"] = pygame.transform.scale(imagen_original, (108, 108)) # 20%
+    boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
+
+    return boton_volver
+
+def mutear():
+    pass

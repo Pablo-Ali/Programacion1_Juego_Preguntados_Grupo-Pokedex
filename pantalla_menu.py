@@ -9,9 +9,9 @@ lista_botones = []
 for i in range(4):
     boton = {}
     imagen_original = boton["superficie"] = pygame.image.load(constantes.RUTA_IMAGENES_BOTONES_MENU[i])
-    boton["superficie"] = pygame.transform.scale(imagen_original, (126, 177)) # 30% de la imagen original
+    boton["superficie"] = pygame.transform.scale(imagen_original, (150, 150)) # 8% de la imagen original
     boton["rectangulo"] = boton["superficie"].get_rect()
-    boton["rectangulo"].topleft = (35 + i * 200, 50 )
+    boton["rectangulo"].topleft = (25 + i * 200, 50 )
     lista_botones.append(boton)
 
 def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]) -> str:
@@ -42,11 +42,5 @@ def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event])
     # Dibujar los botones
     for boton in lista_botones:
         pantalla.blit(boton["superficie"], boton["rectangulo"])
-
-    # Mostrar texto en los botones
-    funciones_generales.mostrar_texto(lista_botones[constantes.BOTON_JUGAR]["superficie"],"JUGAR",(30,120),constantes.FUENTE_25,constantes.COLOR_NEGRO)
-    funciones_generales.mostrar_texto(lista_botones[constantes.BOTON_CONFIG]["superficie"],"CONFIGURAR",(5,120),constantes.FUENTE_25,constantes.COLOR_NEGRO)
-    funciones_generales.mostrar_texto(lista_botones[constantes.BOTON_RANKINGS]["superficie"],"RANKINGS",(15,120),constantes.FUENTE_25,constantes.COLOR_NEGRO)
-    funciones_generales.mostrar_texto(lista_botones[constantes.BOTON_SALIR]["superficie"],"SALIR",(35,120),constantes.FUENTE_25,constantes.COLOR_NEGRO)
 
     return retorno
