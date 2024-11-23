@@ -1,25 +1,20 @@
 import pygame
-import constantes
+from constantes import *
 import funciones_generales
-
-pygame.init()
 
 lista_botones = []
 
 for i in range(4):
     boton = {}
-    imagen_original = boton["superficie"] = pygame.image.load(constantes.RUTA_IMAGENES_BOTONES_MENU[i])
-    boton["superficie"] = pygame.transform.scale(imagen_original, (150, 150)) # 8% de la imagen original
+    boton["superficie"] = pygame.image.load(RUTA_IMAGENES_BOTONES_MENU[i])
     boton["rectangulo"] = boton["superficie"].get_rect()
-    boton["rectangulo"].topleft = (25 + i * 200, 50 )
+    boton["rectangulo"].left = (ANCHO / 2) - (BOTON_MENU_ANCHO /2)
+    boton["rectangulo"].top = (ALTO / 2) + 30 + (i*(BOTON_MENU_ALTO + 5)) 
     lista_botones.append(boton)
 
 def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]) -> str:
-    # Nombre de la ventana
-    pygame.display.set_caption("MENU")
-
     retorno = "menu"
-    
+
     # Gestion Eventos
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
@@ -27,17 +22,19 @@ def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event])
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(lista_botones)):
                 if lista_botones[i]["rectangulo"].collidepoint(evento.pos):
-                    if i == constantes.BOTON_JUGAR:
+                    if i == BOTON_JUGAR:
                         retorno = "juego"
-                    elif i == constantes.BOTON_CONFIG:
+                    elif i == BOTON_CONFIG:
                         retorno = "configuraciones"
-                    elif i == constantes.BOTON_RANKINGS:
+                    elif i == BOTON_RANKINGS:
                         retorno = "rankings"
-                    elif i == constantes.BOTON_SALIR:
+                    elif i == BOTON_SALIR:
                         retorno = "salir"
 
     # Dibujar fondo de pantalla
-    pantalla.blit(constantes.FONDO_MENU, (0, 0))
+    pantalla.blit(FONDO_MENU, (0, 0))
+
+    pantalla.blit(FONDO_MENU_TITLE, (((ANCHO / 2) - (FONDO_MENU_TITLE.get_width() /2)), FONDO_MENU_TITLE.get_height() / 4)) 
 
     # Dibujar los botones
     for boton in lista_botones:
