@@ -69,3 +69,19 @@ def crear_boton_volver() -> dict:
 
 def mutear():
     pass
+
+def verificar_respuesta(datos_juego:dict,pregunta_actual:dict,respuesta:int) -> bool:
+    if pregunta_actual["respuesta_correcta"] == respuesta:
+        datos_juego["puntuacion"] += constantes.PUNTUACION_ACIERTO
+        retorno = True
+    else:
+        #SIN PUNTOS NEGATIVOS
+        if datos_juego["puntuacion"] > constantes.PUNTUACION_ERROR:
+            datos_juego["puntuacion"] -= constantes.PUNTUACION_ERROR
+        
+        #CON PUNTOS NEGATIVOS
+        #datos_juego["puntuacion"] -= PUNTUACION_ERROR
+        datos_juego["vidas"] -= 1
+        retorno = False
+    
+    return retorno

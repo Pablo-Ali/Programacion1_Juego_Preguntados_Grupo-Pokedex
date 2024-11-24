@@ -12,6 +12,14 @@ FPS = 60
 POS_BOTON_VOLVER = (675, 25)
 ICON_PATH = "recursos/imagenes/iconos/icono.png"
 
+CANTIDAD_VIDAS = 3
+PUNTUACION_ACIERTO = 100
+PUNTUACION_ERROR = 25
+
+FUENTE_24 = pygame.font.Font("recursos/fuentes/PKMN RBYGSC.ttf",24)
+
+
+
 #########################################################
 # PANTALLA MENU
 #########################################################

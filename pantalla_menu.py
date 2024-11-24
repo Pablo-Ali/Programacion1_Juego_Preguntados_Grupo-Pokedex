@@ -1,6 +1,5 @@
 import pygame
 from constantes import *
-import funciones_generales
 
 lista_botones = []
 
@@ -12,10 +11,9 @@ for i in range(4):
     boton["rectangulo"].top = (ALTO / 2) + 30 + (i*(BOTON_MENU_ALTO + 5)) 
     lista_botones.append(boton)
 
-def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]) -> str:
+def mostrar_menu( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event] ) -> str:
     retorno = "menu"
-
-    # Gestion Eventos
+    # Control de Eventos
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
             retorno = "salir"
@@ -30,14 +28,12 @@ def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event])
                         retorno = "rankings"
                     elif i == BOTON_SALIR:
                         retorno = "salir"
-
-    # Dibujar fondo de pantalla
+    # Actualizar
+    
+    # Dibujar
     pantalla.blit(FONDO_MENU, (0, 0))
-
     pantalla.blit(FONDO_MENU_TITLE, (((ANCHO / 2) - (FONDO_MENU_TITLE.get_width() /2)), FONDO_MENU_TITLE.get_height() / 4)) 
-
-    # Dibujar los botones
-    for boton in lista_botones:
+    for boton in lista_botones: 
         pantalla.blit(boton["superficie"], boton["rectangulo"])
-
+    # Bye
     return retorno
