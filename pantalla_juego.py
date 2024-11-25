@@ -1,34 +1,60 @@
 import pygame
-from constantes import *
+import constantes 
 from funciones_generales import *
 from preguntas import *
 
-caja_pregunta = {}
-caja_pregunta["superficie"] = pygame.image.load(CAJA_PREGUNTA)
-caja_pregunta["rectangulo"] = caja_pregunta["superficie"].get_rect()
-caja_pregunta["rectangulo"].left = 1
-caja_pregunta["rectangulo"].top = ALTO - caja_pregunta["superficie"].get_height() - 10
+pregunta = {}
+pregunta["superficie"] = pygame.image.load(constantes.CAJA_PREGUNTA)
+pregunta["rectangulo"] = pregunta["superficie"].get_rect()
+pregunta["rectangulo"].left = 1
+pregunta["rectangulo"].top = constantes.ALTO - pregunta["superficie"].get_height() - 10
 
 lista_botones = []
 for i in range(4):
     boton = {}
-    boton["superficie"] = pygame.image.load(BOTON_RESPUESTA)
+    boton["superficie"] = pygame.image.load(constantes.BOTON_LARGE)
+    boton["superficie_hover"] = pygame.image.load(constantes.BOTON_LARGE_HOVER)
+    boton["hover"] = False
+    boton["superficie_correcta"] = pygame.image.load(constantes.BOTON_LARGE_GREEN)
+    boton["superficie_incorrecta"] = pygame.image.load(constantes.BOTON_LARGE_RED)
+    boton["correct"] = False
     boton["rectangulo"] = boton["superficie"].get_rect()
-    boton["rectangulo"].left = 1 + caja_pregunta["superficie"].get_width() + 4 +  ((i//2) * (boton["superficie"].get_width() + 4 ))
-    boton["rectangulo"].top = (ALTO - caja_pregunta["superficie"].get_height() - 10) + ((i%2) * (boton["superficie"].get_height() + 4))
+    boton["rectangulo"].left = 1 + pregunta["superficie"].get_width() + 4 +  ((i//2) * (boton["superficie"].get_width() + 4 ))
+    boton["rectangulo"].top = (constantes.ALTO - pregunta["superficie"].get_height() - 10) + ((i%2) * (boton["superficie"].get_height() + 4))
+    boton["caption"] = ""
     lista_botones.append(boton)
 
+sprite = {}
+sprite["fullsprite"] = pygame.image.load(constantes.SPRITES)
+sprite["fullsprite"] = pygame.transform.scale_by(sprite["fullsprite"], 5)
+sprite["superficie"] = ""
+sprite["rectangulo"] = pygame.Rect((constantes.ANCHO / 2)-250 , 50, 500, 500)
+
+lista_intentos = []
+for i in range(constantes.CANTIDAD_VIDAS):
+    intento = {}
+    intento["superficie"] = pygame.image.load(constantes.ICON_PATH)
+    intento["superficie"] = pygame.transform.scale_by(intento["superficie"], .1)
+    intento["rectangulo"] = intento["superficie"].get_rect()
+    intento["rectangulo"].left = 10 + ((intento["superficie"].get_width() + 5) * i)
+    intento["rectangulo"].top = 50
+    intento["show"] = True
+    lista_intentos.append(intento)
+
+mezclar_lista(lista_preguntas)
+
 indice = 0 #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
-#mezclar_lista(lista_preguntas)
 bandera_respuesta = False #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
 
-def mostrar_juego(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event],datos_juego:dict) -> str:
+def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], datos_juego:dict) -> str:
     global indice
     global bandera_respuesta
+
     retorno = "juego"
     
     # Control de Eventos
     pregunta_actual = lista_preguntas[indice]
+    
     if bandera_respuesta:
         pygame.time.delay(500)
         bandera_respuesta = False
@@ -36,25 +62,24 @@ def mostrar_juego(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
             retorno = "salir"
+        elif evento.type == pygame.MOUSEMOTION:
+            for i in range(len(lista_botones)):
+                lista_botones[i]["hover"] = False
+                if lista_botones[i]["rectangulo"].collidepoint(evento.pos):
+                    lista_botones[i]["hover"] = True  
         if evento.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(lista_botones)):
                 if lista_botones[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = (i + 1)
-
-                    # print(f"LE DIO CLICK A LA RESPUESTA : {respuesta_seleccionada}")
-                    
-                    if verificar_respuesta(datos_juego,pregunta_actual,respuesta_seleccionada):
+                    if verificar_respuesta( datos_juego, pregunta_actual, respuesta_seleccionada ):
                         print("RESPUESTA CORRECTA")
-                        #Ustedes van a manejar una imagen para esto
-                        # lista_botones[i]["superficie"].fill(COLOR_VERDE)
-                        # CLICK_SONIDO.play()
+                        constantes.SELECT_OK_SOUND.play()
                     else:
                         print("RESPUESTA INCORRECTA") 
-                        # retorno = "terminando"
-                        #Ustedes van a manejar una imagen para esto
-                        # lista_botones[i]["superficie"].fill(COLOR_ROJO)
-                        # CLICK_ERROR.play()
-                    
+                        # retorno = "terminado"
+                        constantes.SELECT_FAIL_SOUND.play()
+                        if datos_juego["vidas"] == 0:
+                            retorno = "rankings"
                     indice +=1
                     
                     if indice == len(lista_preguntas):
@@ -64,68 +89,65 @@ def mostrar_juego(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]
                     bandera_respuesta = True
 
     # Actualizar
-    sprites = pygame.image.load(SPRITES)
-    sprite_posx = ((pregunta_actual["id"]-1)%12)*100
-    sprite_posy = ((pregunta_actual["id"]-1)//12)*100
-    sprite_cut = pygame.Rect(sprite_posx, sprite_posy, 100, 100)
-    sprite_img = sprites.subsurface(sprite_cut)
-    sprite_img = pygame.transform.scale_by(sprite_img, 5)
+    sprite_posx = ((pregunta_actual["id"]-1)%12)*500
+    sprite_posy = ((pregunta_actual["id"]-1)//12)*500
+    sprite_cut = pygame.Rect(sprite_posx, sprite_posy, 500, 500)
+    sprite["superficie"] = sprite["fullsprite"].subsurface(sprite_cut)
 
     if (not sprite_posy % 200 and not sprite_posx % 200) or (sprite_posy % 200 and sprite_posx % 200):
-        sprite_img.set_colorkey((255,0,0))
-       
-        
+        sprite["superficie"].set_colorkey((255,0,0))
     else:
-        sprite_img.set_colorkey((0,255,0))
-        
-        
-    
-    sprite = {}
-    sprite["superficie"] = sprite_img
-    sprite["rectangulo"] = sprite["superficie"].get_rect()
-    sprite["rectangulo"].left = (ANCHO / 2) - (sprite["superficie"].get_width() / 2)
-    sprite["rectangulo"].top = 50
+        sprite["superficie"].set_colorkey((0,255,0))
 
-    pregunta_actual_render = FUENTE_24.render(pregunta_actual["pregunta"], True, COLOR_NEGRO)
-    pregunta_actual_render_rect = pregunta_actual_render.get_rect()
-    pregunta_actual_render_rect.center = (caja_pregunta["rectangulo"].left + (caja_pregunta["superficie"].get_width()/2), caja_pregunta["rectangulo"].top + (caja_pregunta["superficie"].get_height()/2) ) 
+    for i in range(len(lista_intentos)):
+        intento = lista_intentos[i]
+        intento["show"] = True
+        if i+1 > datos_juego["vidas"]:
+            intento["show"] = False
 
-    respuesta_01_render = FUENTE_24.render(pregunta_actual["respuesta_1"].upper(), True, COLOR_NEGRO)
-    respuesta_01_render_rect = respuesta_01_render.get_rect()
-    respuesta_01_render_rect.center = (lista_botones[0]["rectangulo"].left + (lista_botones[0]["superficie"].get_width()/2), lista_botones[0]["rectangulo"].top + (lista_botones[0]["superficie"].get_height()/2) )
-
-    respuesta_02_render = FUENTE_24.render(pregunta_actual["respuesta_2"].upper(), True, COLOR_NEGRO)
-    respuesta_02_render_rect = respuesta_02_render.get_rect()
-    respuesta_02_render_rect.center = (lista_botones[1]["rectangulo"].left + (lista_botones[1]["superficie"].get_width()/2), lista_botones[1]["rectangulo"].top + (lista_botones[1]["superficie"].get_height()/2) )
-
-
-    respuesta_03_render = FUENTE_24.render(pregunta_actual["respuesta_3"].upper(), True, COLOR_NEGRO)
-    respuesta_03_render_rect = respuesta_03_render.get_rect()
-    respuesta_03_render_rect.center = (lista_botones[2]["rectangulo"].left + (lista_botones[2]["superficie"].get_width()/2), lista_botones[2]["rectangulo"].top + (lista_botones[2]["superficie"].get_height()/2) )
-
-    respuesta_04_render = FUENTE_24.render(pregunta_actual["respuesta_4"].upper(), True, COLOR_NEGRO)
-    respuesta_04_render_rect = respuesta_04_render.get_rect()
-    respuesta_04_render_rect.center = (lista_botones[3]["rectangulo"].left + (lista_botones[3]["superficie"].get_width()/2), lista_botones[3]["rectangulo"].top + (lista_botones[3]["superficie"].get_height()/2) )
+    for i in range(len(lista_botones)):
+        boton = lista_botones[i]
+        boton["correct"] = False
+        if i+1 == pregunta_actual["respuesta_correcta"]:
+            boton["correct"] = True
+        match i:
+            case 0:
+                boton["caption"] = pregunta_actual["respuesta_1"].upper()
+            case 1:
+                boton["caption"] = pregunta_actual["respuesta_2"].upper()
+            case 2:
+                boton["caption"] = pregunta_actual["respuesta_3"].upper()
+            case 3:
+                boton["caption"] = pregunta_actual["respuesta_4"].upper()
 
     # Dibujar
     pantalla.blit(constantes.FONDO_JUEGO, (0, 0))
+    
+    intentos_caption = constantes.FUENTE_24.render("intentos:".upper(), True, constantes.COLOR_NEGRO)
+    pantalla.blit(intentos_caption, (10,10))  
+    for intento in lista_intentos:
+        if intento["show"]:
+            pantalla.blit(intento["superficie"], intento["rectangulo"])
 
     pantalla.blit(sprite["superficie"], sprite["rectangulo"])
 
-    pantalla.blit(caja_pregunta["superficie"],caja_pregunta["rectangulo"])
-    pantalla.blit(pregunta_actual_render, pregunta_actual_render_rect )
+    pantalla.blit(pregunta["superficie"],pregunta["rectangulo"])
+    mostrar_texto_largo_centrado(pregunta["superficie"],pregunta_actual["pregunta"].upper())
 
-    pantalla.blit(lista_botones[0]["superficie"],lista_botones[0]["rectangulo"])
-    pantalla.blit(respuesta_01_render, respuesta_01_render_rect)
-
-    pantalla.blit(lista_botones[1]["superficie"],lista_botones[1]["rectangulo"])
-    pantalla.blit(respuesta_02_render,respuesta_02_render_rect)
-
-    pantalla.blit(lista_botones[2]["superficie"],lista_botones[2]["rectangulo"])
-    pantalla.blit(respuesta_03_render,respuesta_03_render_rect)
-
-    pantalla.blit(lista_botones[3]["superficie"],lista_botones[3]["rectangulo"])
-    pantalla.blit(respuesta_04_render,respuesta_04_render_rect)
+    for boton in lista_botones:
+        if bandera_respuesta:
+            if boton["correct"]:
+                pantalla.blit(boton["superficie_correcta"], boton["rectangulo"])
+            else:
+                pantalla.blit(boton["superficie_incorrecta"], boton["rectangulo"])
+        else:
+            if boton["hover"]:
+                pantalla.blit(boton["superficie_hover"], boton["rectangulo"])
+            else:
+                pantalla.blit(boton["superficie"], boton["rectangulo"])
+        text_render = constantes.FUENTE_24.render(boton["caption"], True, constantes.COLOR_NEGRO)
+        text_rect = text_render.get_rect(center=boton["rectangulo"].center)
+        pantalla.blit(text_render, text_rect)  
 
     # Bye
     return retorno

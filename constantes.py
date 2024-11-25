@@ -10,14 +10,17 @@ ALTO = 700
 VENTANA = (ANCHO,ALTO)
 FPS = 60
 POS_BOTON_VOLVER = (675, 25)
-ICON_PATH = "recursos/imagenes/iconos/icono.png"
+ICON_PATH = "recursos/imagenes/iconos/pokeball.png"
 
-CANTIDAD_VIDAS = 3
+CANTIDAD_VIDAS = 6
 PUNTUACION_ACIERTO = 100
 PUNTUACION_ERROR = 25
 
-FUENTE_24 = pygame.font.Font("recursos/fuentes/PKMN RBYGSC.ttf",24)
+FUENTE_24 = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",24)
 
+SELECT_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/select.mp3")
+SELECT_OK_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/correct.mp3")
+SELECT_FAIL_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/fail.mp3")
 
 
 #########################################################
@@ -36,12 +39,8 @@ BOTON_CONFIG = 1
 BOTON_RANKINGS = 2
 BOTON_SALIR = 3
 
-RUTA_IMAGENES_BOTONES_MENU = [
-    "recursos/imagenes/botones/boton_JUGAR.png",
-    "recursos/imagenes/botones/boton_RANKING.png",
-    "recursos/imagenes/botones/boton_AJUSTES.png",
-    "recursos/imagenes/botones/boton_SALIR.png"
-]
+BOTON_SMALL = "recursos/imagenes/botones/small_buttom.png"
+BOTON_SMALL_HOVER = "recursos/imagenes/botones/small_buttom_hover.png"
 
 SPRITES = "recursos/imagenes/sprites/sprites.png"
 
@@ -52,21 +51,11 @@ MUSICA_MENU = "recursos/audio/musica/pantalla_menu.mp3"
 # PANTALLA JUEGO
 #########################################################
 
-# - BOTONES
-# BOTON__ANCHO = 200
-# BOTON_MENU_ALTO = 70
-
-# RUTA_IMAGENES_BOTONES_MENU = [
-#     "recursos/imagenes/botones/boton_JUGAR.png",
-#     "recursos/imagenes/botones/boton_RANKING.png",
-#     "recursos/imagenes/botones/boton_AJUSTES.png",
-#     "recursos/imagenes/botones/boton_SALIR.png"
-# ]
-
-
 CAJA_PREGUNTA =  "recursos/imagenes/botones/question.png"
-BOTON_RESPUESTA = "recursos/imagenes/botones/large_buttom.png"
-
+BOTON_LARGE = "recursos/imagenes/botones/large_buttom.png"
+BOTON_LARGE_HOVER = "recursos/imagenes/botones/large_buttom_hover.png"
+BOTON_LARGE_RED = "recursos/imagenes/botones/large_buttom_red.png"
+BOTON_LARGE_GREEN = "recursos/imagenes/botones/large_buttom_green.png"
 
 # - FONDOS
 FONDO_JUEGO = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondos/pantalla_juego.png"), VENTANA)
@@ -82,7 +71,7 @@ MUSICA_JUEGO = "recursos/audio/musica/pantalla_juego.mp3"
 
 
 # Jugador
-CANTIDAD_VIDAS = 3
+# CANTIDAD_VIDAS = 3
 PUNTUACION_ACIERTO = 100
 PUNTUACION_ERROR = 50
 

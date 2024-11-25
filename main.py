@@ -12,7 +12,7 @@ import jugador
 pygame.init()
 
 # Nombre de la ventana
-pygame.display.set_caption("¿Quién es ese pokemon?")
+pygame.display.set_caption("¿Quién es ese Pokémon?")
 
 # Ícono del juego
 icono = pygame.image.load(constantes.ICON_PATH)
@@ -39,7 +39,7 @@ musica_rankings = False
 musica_terminado = False
 pantalla_actual = "menu"
 
-datos_juego = {"puntuacion":0,"vidas":6,"usuario":"","volumen_musica":100}
+datos_juego = {"puntuacion":0,"vidas":constantes.CANTIDAD_VIDAS,"usuario":"","volumen_musica":100}
 
 # Iniciamos el bucle principal
 while corriendo:
@@ -68,6 +68,7 @@ while corriendo:
                 musica_rankings = False
                 musica_terminado = False
 
+            datos_juego["vidas"] = constantes.CANTIDAD_VIDAS
             # Llamamos a la función que ejecuta la pantalla
             pantalla_actual = pantalla_menu.mostrar_menu(pantalla, cola_eventos)
 
