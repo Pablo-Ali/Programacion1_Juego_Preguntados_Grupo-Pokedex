@@ -12,10 +12,10 @@ import jugador
 pygame.init()
 
 # Nombre de la ventana
-pygame.display.set_caption("Preguntados Pokédex")
+pygame.display.set_caption("¿Quién es ese Pokémon?")
 
 # Ícono del juego
-icono = pygame.image.load("recursos/imagenes/pokeball.png")
+icono = pygame.image.load(constantes.ICON_PATH)
 pygame.display.set_icon(icono)
 
 # Creamos la pantalla
@@ -38,6 +38,8 @@ musica_configuraciones = False
 musica_rankings = False
 musica_terminado = False
 pantalla_actual = "menu"
+
+datos_juego = {"puntuacion":0,"vidas":constantes.CANTIDAD_VIDAS,"usuario":"","volumen_musica":100}
 
 # Iniciamos el bucle principal
 while corriendo:
@@ -66,20 +68,21 @@ while corriendo:
                 musica_rankings = False
                 musica_terminado = False
 
+            datos_juego["vidas"] = constantes.CANTIDAD_VIDAS
             # Llamamos a la función que ejecuta la pantalla
             pantalla_actual = pantalla_menu.mostrar_menu(pantalla, cola_eventos)
 
         case "juego":
             if musica_juego == False:
                 pygame.mixer.music.stop()
-                funciones_generales.iniciar_musica(constantes.MUSICA_JUEGO, jugador.get_volumen_musica())
+                funciones_generales.iniciar_musica(constantes.MUSICA_JUEGO, jugador.get_volumen_musica() )
                 musica_menu = False
                 musica_juego = True #True
                 musica_configuraciones = False
                 musica_rankings = False
                 musica_terminado = False
 
-            pantalla_actual = pantalla_juego.mostrar_juego(pantalla, cola_eventos)
+            pantalla_actual = pantalla_juego.mostrar_juego(pantalla, cola_eventos, datos_juego)
 
         case "configuraciones":
             if musica_configuraciones == False:
