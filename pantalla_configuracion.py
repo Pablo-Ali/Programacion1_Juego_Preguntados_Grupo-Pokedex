@@ -7,7 +7,7 @@ pygame.init()
 boton_volver = funciones_generales.crear_boton_volver()
 
 def mostrar_configuraciones(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]) -> str:
-    pygame.display.set_caption("CONFIGURACIONES")
+    pygame.display.set_caption("¿Quién es ese Pokémon?")
     
     retorno = "configuraciones"
 

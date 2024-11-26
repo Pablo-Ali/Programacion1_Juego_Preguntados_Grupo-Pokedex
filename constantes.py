@@ -9,7 +9,7 @@ ANCHO = 1000
 ALTO = 700
 VENTANA = (ANCHO,ALTO)
 FPS = 60
-POS_BOTON_VOLVER = (675, 25)
+POS_BOTON_VOLVER = (875, 25)
 ICON_PATH = "recursos/imagenes/iconos/pokeball.png"
 
 CANTIDAD_VIDAS = 6
@@ -68,12 +68,6 @@ MUSICA_JUEGO = "recursos/audio/musica/pantalla_juego.mp3"
 
 
 
-
-
-# Jugador
-# CANTIDAD_VIDAS = 3
-PUNTUACION_ACIERTO = 100
-PUNTUACION_ERROR = 50
 
 # Fondos
 FONDO_CONFIGURACIONES = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondo_10.jpg"), VENTANA)

@@ -25,7 +25,7 @@ pantalla = pygame.display.set_mode(constantes.VENTANA)
 reloj = pygame.time.Clock()
 
 # Creamos al jugador
-jugador = Jugador("", constantes.CANTIDAD_VIDAS, 0, 30, 100, True, True)
+jugador = Jugador("", constantes.CANTIDAD_VIDAS, 0, 20, 70, True, True)
 
 # Inicializamos mixer para la música
 pygame.mixer.init()
@@ -68,7 +68,7 @@ while corriendo:
                 musica_terminado = False
             
             # Llamamos a la función que ejecuta la pantalla
-            pantalla_actual = pantalla_menu.mostrar_menu(pantalla, cola_eventos)
+            pantalla_actual = pantalla_menu.mostrar_menu(pantalla, cola_eventos, jugador)
 
         case "juego":
             if musica_juego == False:
@@ -116,6 +116,7 @@ while corriendo:
                 musica_rankings = False
                 musica_terminado = True #True
 
+            pantalla_actual = pantalla_partida_finalizada.mostrar_partida_finalizada(pantalla, cola_eventos, jugador)
         case "salir":
             corriendo = False
     

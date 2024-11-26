@@ -1,5 +1,7 @@
 import pygame
 import constantes
+import funciones_generales
+from jugador import Jugador
 
 lista_botones = []
 for i in range(4):
@@ -21,7 +23,7 @@ for i in range(4):
             boton["caption"] = "salir".upper()
     lista_botones.append(boton)
 
-def mostrar_menu( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event] ) -> str:
+def mostrar_menu(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador :Jugador) -> str:
     retorno = "menu"
 
     # Control de Eventos
@@ -36,7 +38,7 @@ def mostrar_menu( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(lista_botones)):
                 if lista_botones[i]["rectangulo"].collidepoint(evento.pos):
-                    constantes.SELECT_SOUND.play()
+                    funciones_generales.reproducir_efecto_sonido(constantes.SELECT_SOUND, jugador.get_volumen_efectos())
                     pygame.time.delay(350)
                     match i:
                         case constantes.BOTON_JUGAR:
@@ -45,7 +47,7 @@ def mostrar_menu( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event]
                             retorno = "configuraciones"
                         case constantes.BOTON_RANKINGS:
                             retorno = "rankings"  
-                        case constantes.BOTON_RANKINGS:
+                        case constantes.BOTON_SALIR:
                             retorno = "salir"  
     # Actualizar
   
