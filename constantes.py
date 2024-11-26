@@ -18,7 +18,7 @@ PUNTUACION_ERROR = 25
 
 FUENTE_24 = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",24)
 
-SELECT_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/select.mp3")
+SELECT_SOUND = "recursos/audio/sonidos/select.mp3"
 SELECT_OK_SOUND = "recursos/audio/sonidos/correct.mp3"
 SELECT_FAIL_SOUND = "recursos/audio/sonidos/fail.mp3"
 
@@ -80,6 +80,12 @@ FONDO_RANKINGS = pygame.transform.scale(pygame.image.load("recursos/imagenes/fon
 
 # Imagenes
 
+BOTON_SONIDO_ON = "recursos/imagenes/volumen_on.png"
+BOTON_SONIDO_MUTE = "recursos/imagenes/volumen_off.png"
+BOTON_SONIDO_MAS = "recursos/imagenes/volumen_mas.png"
+BOTON_SONIDO_MENOS = "recursos/imagenes/volumen_menos.png"
+CARTEL_VOLUMEN_MUSICA = "recursos/imagenes/cartel_vol_musica.png"
+CARTEL_VOLUMEN_EFECTOS = "recursos/imagenes/cartel_vol_efectos.png"
 
 RUTA_IMAGEN_BOTON_VOLVER = "recursos/imagenes/volver.png"
 
@@ -98,6 +104,7 @@ MUSICA_PARTIDA_FINALIZADA = "recursos/audio/Pokemon_Ending.mp3"
 # Fuentes
 FUENTE_25 = pygame.font.SysFont("Arial Narrow",25)
 FUENTE_30 = pygame.font.SysFont("Arial Narrow",30)
+FUENTE_40 = pygame.font.SysFont("Arial Narrow",40)
 
 
 

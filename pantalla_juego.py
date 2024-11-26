@@ -5,9 +5,9 @@ from preguntas import *
 from jugador import Jugador
 
 
-####################################################
-boton_volver = crear_boton_volver()  # BOTÓN VOLVER
-####################################################
+###################################################################################################
+boton_volver = crear_boton_generico(constantes.RUTA_IMAGEN_BOTON_VOLVER, 108, 108)  # BOTÓN VOLVER
+###################################################################################################
 
 
 pregunta = {}

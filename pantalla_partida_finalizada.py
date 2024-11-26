@@ -5,7 +5,7 @@ from jugador import Jugador
 
 pygame.init()
 
-boton_volver = funciones_generales.crear_boton_volver()
+boton_volver = funciones_generales.crear_boton_generico(constantes.RUTA_IMAGEN_BOTON_VOLVER, 108, 108)
 
 def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador : Jugador) -> str:
     pygame.display.set_caption("¿Quién es ese Pokémon?")
