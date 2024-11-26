@@ -19,8 +19,8 @@ PUNTUACION_ERROR = 25
 FUENTE_24 = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",24)
 
 SELECT_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/select.mp3")
-SELECT_OK_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/correct.mp3")
-SELECT_FAIL_SOUND = pygame.mixer.Sound("recursos/audio/sonidos/fail.mp3")
+SELECT_OK_SOUND = "recursos/audio/sonidos/correct.mp3"
+SELECT_FAIL_SOUND = "recursos/audio/sonidos/fail.mp3"
 
 
 #########################################################
