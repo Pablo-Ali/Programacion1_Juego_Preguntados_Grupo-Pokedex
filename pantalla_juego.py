@@ -2,6 +2,7 @@ import pygame
 import constantes 
 from funciones_generales import *
 from preguntas import *
+from jugador import Jugador
 
 pregunta = {}
 pregunta["superficie"] = pygame.image.load(constantes.CAJA_PREGUNTA)
@@ -46,7 +47,7 @@ mezclar_lista(lista_preguntas)
 indice = 0 #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
 bandera_respuesta = False #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
 
-def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], datos_juego:dict) -> str:
+def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador:Jugador) -> str:
     global indice
     global bandera_respuesta
 
@@ -71,15 +72,15 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
             for i in range(len(lista_botones)):
                 if lista_botones[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = (i + 1)
-                    if verificar_respuesta( datos_juego, pregunta_actual, respuesta_seleccionada ):
+                    if verificar_respuesta( jugador, pregunta_actual, respuesta_seleccionada ):
                         print("RESPUESTA CORRECTA")
-                        constantes.SELECT_OK_SOUND.play()
+                        reproducir_efecto_sonido(constantes.SELECT_OK_SOUND, jugador.get_volumen_efectos())
                     else:
                         print("RESPUESTA INCORRECTA") 
                         # retorno = "terminado"
-                        constantes.SELECT_FAIL_SOUND.play()
-                        if datos_juego["vidas"] == 0:
-                            retorno = "rankings"
+                        reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
+                        if jugador.get_vidas() == 0:
+                            retorno = "terminado"
                     indice +=1
                     
                     if indice == len(lista_preguntas):
@@ -102,7 +103,7 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
     for i in range(len(lista_intentos)):
         intento = lista_intentos[i]
         intento["show"] = True
-        if i+1 > datos_juego["vidas"]:
+        if i+1 > jugador.get_vidas():
             intento["show"] = False
 
     for i in range(len(lista_botones)):

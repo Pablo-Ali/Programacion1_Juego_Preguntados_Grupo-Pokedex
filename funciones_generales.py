@@ -1,6 +1,7 @@
 import pygame
 import random
 import constantes
+from jugador import Jugador
 
 def mostrar_texto(surface, text, pos, font, color=pygame.Color('black')):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -78,10 +79,33 @@ def iniciar_musica(ruta : str, volumen : int) -> None:
     # La reproducimos en bucle
     pygame.mixer.music.play(-1)
 
+def reproducir_efecto_sonido(ruta : str, volumen : int) -> None:
+    '''
+    Función que recibe la ruta de un efecto de sonido y un entero.
+    Carga el sonido en el mixer de pygame, establece su volumen
+    y lo reproduce.
+    '''
+    # Generamos el float del volumen
+    volumen_float = generar_flotante_musica(volumen)
+    #Cargamos la pista musical
+    efecto_sonido = pygame.mixer.Sound(ruta)
+    # Seteamos el volumen
+    efecto_sonido.set_volume(volumen_float)
+    # La reproducimos una sola vez
+    efecto_sonido.play()
+
 def cambiar_volumen_musica(volumen : int) -> None:
     '''
     Función que permite modificar el volumen de la música
     a partir de un entero pasado por parámetro.
+    '''
+    volumen_float = generar_flotante_musica(volumen)
+    pygame.mixer.music.set_volume(volumen_float)
+
+def cambiar_volumen_efectos(volumen : int) -> None:
+    '''
+    Función que permite modificar el volumen de los efectos
+    de sonido a partir de un entero pasado por parámetro.
     '''
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
@@ -97,18 +121,18 @@ def crear_boton_volver() -> dict:
 def mutear():
     pass
 
-def verificar_respuesta(datos_juego:dict,pregunta_actual:dict,respuesta:int) -> bool:
+def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> bool:
     if pregunta_actual["respuesta_correcta"] == respuesta:
-        datos_juego["puntuacion"] += constantes.PUNTUACION_ACIERTO
+        jugador.set_puntos(jugador.get_puntos() + constantes.PUNTUACION_ACIERTO)
         retorno = True
     else:
         #SIN PUNTOS NEGATIVOS
-        if datos_juego["puntuacion"] > constantes.PUNTUACION_ERROR:
-            datos_juego["puntuacion"] -= constantes.PUNTUACION_ERROR
+        if jugador.get_puntos() > constantes.PUNTUACION_ERROR:
+            jugador.set_puntos(jugador.get_puntos() - constantes.PUNTUACION_ERROR)
         
         #CON PUNTOS NEGATIVOS
         #datos_juego["puntuacion"] -= PUNTUACION_ERROR
-        datos_juego["vidas"] -= 1
+        jugador.set_vidas(jugador.get_vidas() - 1)
         retorno = False
     
     return retorno
