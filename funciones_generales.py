@@ -110,10 +110,10 @@ def cambiar_volumen_efectos(volumen : int) -> None:
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
 
-def crear_boton_volver() -> dict:
+def crear_boton_generico(ruta, ancho, alto) -> dict:
     boton_volver = {}
-    imagen_original = boton_volver["superficie"] = pygame.image.load(constantes.RUTA_IMAGEN_BOTON_VOLVER)
-    boton_volver["superficie"] = pygame.transform.scale(imagen_original, (108, 108)) # 20%
+    imagen_original = boton_volver["superficie"] = pygame.image.load(ruta)
+    boton_volver["superficie"] = pygame.transform.scale(imagen_original, (ancho, alto))
     boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
 
     return boton_volver
