@@ -25,7 +25,7 @@ pantalla = pygame.display.set_mode(constantes.VENTANA)
 reloj = pygame.time.Clock()
 
 # Creamos al jugador
-jugador = Jugador("", constantes.CANTIDAD_VIDAS, 0, 25, 70, True, True)
+jugador = Jugador("", constantes.CANTIDAD_VIDAS, 0, 25, 70, True, True, True)
 
 # Inicializamos mixer para la música
 pygame.mixer.init()
@@ -51,70 +51,79 @@ while corriendo:
     # Verificamos la pantalla a mostrar
     match pantalla_actual:
         case "menu":
-            # Verificamos que la música esté activada y la reproducimos
-            if musica_menu == False:
+            if jugador.get_musica_on():
                 
-                # Detenemos cualquier música previa
+                # Verificamos que la música esté activada y la reproducimos
+                if musica_menu == False:
+                    # Iniciamos la música de la pantalla
+                    funciones_generales.iniciar_musica(constantes.MUSICA_MENU, jugador.get_volumen_musica())
+            
+                    # Cambiamos el valor de las banderas
+                    musica_menu = True #True
+                    musica_juego = False
+                    musica_configuraciones = False
+                    musica_rankings = False
+                    musica_terminado = False
+            else:
+                # Detenemos la música
                 pygame.mixer.music.stop()
-                
-                # Iniciamos la música de la pantalla
-                funciones_generales.iniciar_musica(constantes.MUSICA_MENU, jugador.get_volumen_musica())
-                
-                # Cambiamos el valor de las banderas
-                musica_menu = True #True
-                musica_juego = False
-                musica_configuraciones = False
-                musica_rankings = False
-                musica_terminado = False
             
             # Llamamos a la función que ejecuta la pantalla
             pantalla_actual = pantalla_menu.mostrar_menu(pantalla, cola_eventos, jugador)
 
         case "juego":
-            if musica_juego == False:
+            if jugador.get_musica_on():
+                if musica_juego == False:
+                    funciones_generales.iniciar_musica(constantes.MUSICA_JUEGO, jugador.get_volumen_musica())
+                    musica_menu = False
+                    musica_juego = True #True
+                    musica_configuraciones = False
+                    musica_rankings = False
+                    musica_terminado = False
+            else:
                 pygame.mixer.music.stop()
-                funciones_generales.iniciar_musica(constantes.MUSICA_JUEGO, jugador.get_volumen_musica())
-                musica_menu = False
-                musica_juego = True #True
-                musica_configuraciones = False
-                musica_rankings = False
-                musica_terminado = False
 
             pantalla_actual = pantalla_juego.mostrar_juego(pantalla, cola_eventos, jugador)
 
         case "configuraciones":
-            if musica_configuraciones == False:
+            if jugador.get_musica_on():
+                if musica_configuraciones == False:
+                    funciones_generales.iniciar_musica(constantes.MUSICA_CONFIGURACION, jugador.get_volumen_musica())
+                    musica_menu = False
+                    musica_juego = False
+                    musica_configuraciones = True #True
+                    musica_rankings = False
+                    musica_terminado = False
+            else:
                 pygame.mixer.music.stop()
-                funciones_generales.iniciar_musica(constantes.MUSICA_CONFIGURACION, jugador.get_volumen_musica())
-                musica_menu = False
-                musica_juego = False
-                musica_configuraciones = True #True
-                musica_rankings = False
-                musica_terminado = False
-            
+                
             pantalla_actual = pantalla_configuracion.mostrar_configuraciones(pantalla, cola_eventos, jugador)
 
         case "rankings":
-            if musica_rankings == False:
+            if jugador.get_musica_on():
+                if musica_rankings == False:
+                    funciones_generales.iniciar_musica(constantes.MUSICA_RANKINGS, jugador.get_volumen_musica())
+                    musica_menu = False
+                    musica_juego = False
+                    musica_configuraciones = False
+                    musica_rankings = True #True
+                    musica_terminado = False
+            else:
                 pygame.mixer.music.stop()
-                funciones_generales.iniciar_musica(constantes.MUSICA_RANKINGS, jugador.get_volumen_musica())
-                musica_menu = False
-                musica_juego = False
-                musica_configuraciones = False
-                musica_rankings = True #True
-                musica_terminado = False
 
             pantalla_actual = pantalla_rankings.mostrar_rankings(pantalla, cola_eventos)
 
         case "terminado":
-            if musica_terminado == False:
+            if jugador.get_musica_on():
+                if musica_terminado == False:
+                    funciones_generales.iniciar_musica(constantes.MUSICA_PARTIDA_FINALIZADA, jugador.get_volumen_musica())
+                    musica_menu = False
+                    musica_juego = False
+                    musica_configuraciones = False
+                    musica_rankings = False
+                    musica_terminado = True #True
+            else:
                 pygame.mixer.music.stop()
-                funciones_generales.iniciar_musica(constantes.MUSICA_PARTIDA_FINALIZADA, jugador.get_volumen_musica())
-                musica_menu = False
-                musica_juego = False
-                musica_configuraciones = False
-                musica_rankings = False
-                musica_terminado = True #True
 
             pantalla_actual = pantalla_partida_finalizada.mostrar_partida_finalizada(pantalla, cola_eventos, jugador)
         case "salir":

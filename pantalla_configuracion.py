@@ -11,6 +11,8 @@ mouse_presionado = False
 boton_presionado = None
 ultima_actualizacion = 0  # Para controlar la velocidad del cambio al mantener presionado
 
+boton_parar_musica = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MUTE, 100, 100)
+boton_prender_musica = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_ON, 100, 100)
 boton_volver = funciones_generales.crear_boton_generico(constantes.RUTA_IMAGEN_BOTON_VOLVER, 108, 108)
 boton_mas_musica = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MAS, 100, 100)
 boton_menos_musica = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MENOS, 100, 100)
@@ -46,6 +48,12 @@ def mostrar_configuraciones(pantalla: pygame.Surface, cola_eventos: list[pygame.
                 boton_presionado = "efectos_mas"
             elif boton_menos_efectos["rectangulo"].collidepoint(evento.pos):
                 boton_presionado = "efectos_menos"
+            elif boton_parar_musica["rectangulo"].collidepoint(evento.pos):
+                if jugador.get_musica_on():
+                    jugador.set_musica_on(False)
+            elif boton_prender_musica["rectangulo"].collidepoint(evento.pos):
+                if jugador.get_musica_on() == False:
+                    jugador.set_musica_on(True)
         elif evento.type == pygame.MOUSEBUTTONUP:
             mouse_presionado = False
             boton_presionado = None
@@ -78,7 +86,8 @@ def mostrar_configuraciones(pantalla: pygame.Surface, cola_eventos: list[pygame.
     boton_mas_musica["rectangulo"] = pantalla.blit(boton_mas_musica["superficie"], (600, 150))
     boton_menos_efectos["rectangulo"] = pantalla.blit(boton_menos_efectos["superficie"], (100, 350))
     boton_mas_efectos["rectangulo"] = pantalla.blit(boton_mas_efectos["superficie"], (600, 350))
-
+    boton_parar_musica["rectangulo"] = pantalla.blit(boton_parar_musica["superficie"], (450, 550))
+    boton_prender_musica["rectangulo"] = pantalla.blit(boton_prender_musica["superficie"], (250, 550))
     
     # Dibjar los carteles en cada iteración para evitar superposición
     pantalla.blit(cartel_musica["superficie"], (300, 100))
@@ -95,6 +104,14 @@ def mostrar_configuraciones(pantalla: pygame.Surface, cola_eventos: list[pygame.
     if volumen_musica_actual != jugador.get_volumen_musica():
         funciones_generales.cambiar_volumen_musica(jugador.get_volumen_musica())
         volumen_musica_actual = jugador.get_volumen_musica()
+
+    # Verificar el estado de la música y refrescar inmediatamente
+    if not jugador.get_musica_on():
+        if pygame.mixer.music.get_busy():  # Solo detener si está sonando
+            pygame.mixer.music.stop()
+    else:
+        if not pygame.mixer.music.get_busy():  # Solo iniciar si no está sonando
+            funciones_generales.iniciar_musica(constantes.MUSICA_CONFIGURACION, jugador.get_volumen_musica())
 
     return retorno
 
