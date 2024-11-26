@@ -4,6 +4,12 @@ from funciones_generales import *
 from preguntas import *
 from jugador import Jugador
 
+
+####################################################
+boton_volver = crear_boton_volver()  # BOTÓN VOLVER
+####################################################
+
+
 pregunta = {}
 pregunta["superficie"] = pygame.image.load(constantes.CAJA_PREGUNTA)
 pregunta["rectangulo"] = pregunta["superficie"].get_rect()
@@ -63,6 +69,9 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
             retorno = "salir"
+        elif evento.type == pygame.MOUSEBUTTONDOWN: ### BOTÓN VOLVER ###################
+            if boton_volver["rectangulo"].collidepoint(evento.pos): ### BOTÓN VOLVER ###
+                retorno = "menu" ### BOTÓN VOLVER ######################################
         elif evento.type == pygame.MOUSEMOTION:
             for i in range(len(lista_botones)):
                 lista_botones[i]["hover"] = False
@@ -149,6 +158,11 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
         text_render = constantes.FUENTE_24.render(boton["caption"], True, constantes.COLOR_NEGRO)
         text_rect = text_render.get_rect(center=boton["rectangulo"].center)
         pantalla.blit(text_render, text_rect)  
+
+
+    #################################################################################################################
+    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],constantes.POS_BOTON_VOLVER) # BOTÓN VOLVER
+    ##################################################################################################################
 
     # Bye
     return retorno
