@@ -105,6 +105,7 @@ def cambiar_volumen_musica(volumen : int) -> None:
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
 
+# def crear_boton_generico(ruta, ancho, alto) -> dict:
 def crear_boton_generico(surface, ancho, alto) -> dict:
     boton_volver = {}
     imagen_original = boton_volver["superficie"] = surface
