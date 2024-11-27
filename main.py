@@ -15,7 +15,7 @@ pygame.init()
 pygame.display.set_caption("¿Quién es ese Pokémon?")
 
 # Ícono del juego
-icono = pygame.image.load(constantes.ICON_PATH)
+icono = constantes.ICON_PATH
 pygame.display.set_icon(icono)
 
 # Creamos la pantalla

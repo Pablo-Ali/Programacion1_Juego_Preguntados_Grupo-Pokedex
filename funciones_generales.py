@@ -29,26 +29,26 @@ def mostrar_texto_largo_centrado( surface:pygame.Surface, text:str ):
     max_width, max_height = surface.get_size()
     line_width, line_height = (0,0)
     line_text = ""
-    space = constantes.FUENTE_24.size(' ')[0]
+    space = constantes.FUENTE_POKEMON_GB.size(' ')[0]
     for i in range(len(words)+1):
         if i == (len(words)):
             lines.append({"text":line_text.strip(), "width": line_width - space})
             break
         word = words[i].upper()
-        word_width, word_height = constantes.FUENTE_24.size(word)
+        word_width, word_height = constantes.FUENTE_POKEMON_GB.size(word)
         if line_width + word_width > max_width:
             lines.append({"text":line_text.strip(), "width": line_width - space})
             line_width = word_width
             line_text = word + " "
         else:
-            line_width += word_width + constantes.FUENTE_24.size(' ')[0]
+            line_width += word_width + constantes.FUENTE_POKEMON_GB.size(' ')[0]
             line_text += word + " "
         if word_height > line_height:
             line_height = word_height
     for i in range(len(lines)):
         pos_x = (max_width - lines[i]["width"]) / 2
         pos_y = ((max_height / len(lines)) * i) + ((max_height / len(lines))/2) - (line_height/2)
-        line_surface = constantes.FUENTE_24.render(lines[i]["text"], False, constantes.COLOR_NEGRO)
+        line_surface = constantes.FUENTE_POKEMON_GB.render(lines[i]["text"], False, constantes.COLOR_NEGRO)
         surface.blit(line_surface, (pos_x, pos_y))    
 
 def mezclar_lista(lista:list) -> None:
@@ -105,9 +105,12 @@ def cambiar_volumen_musica(volumen : int) -> None:
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
 
-def crear_boton_generico(ruta, ancho, alto) -> dict:
+
+# def crear_boton_generico(ruta, ancho, alto) -> dict:
+def crear_boton_generico(surface, ancho, alto) -> dict:
+
     boton_volver = {}
-    imagen_original = boton_volver["superficie"] = pygame.image.load(ruta)
+    imagen_original = boton_volver["superficie"] = surface
     boton_volver["superficie"] = pygame.transform.scale(imagen_original, (ancho, alto))
     boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
 

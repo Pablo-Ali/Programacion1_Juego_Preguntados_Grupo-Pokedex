@@ -6,6 +6,8 @@ from jugador import Jugador
 pygame.init()
 
 boton_volver = funciones_generales.crear_boton_generico(constantes.RUTA_IMAGEN_BOTON_VOLVER, 108, 108)
+#boton_enter = funciones_generales.crear_boton_generico(constantes.BOTON_SMALL, 140, 50)
+
 boton_enter = funciones_generales.crear_boton_generico(constantes.BOTON_SMALL, 140, 50)
 caja_texto = funciones_generales.crear_boton_generico(constantes.CAJA_PREGUNTA, 400, 200)
 caja_texto_mensaje = funciones_generales.crear_boton_generico(constantes.CAJA_PREGUNTA, 600, 200)
@@ -119,13 +121,14 @@ def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame
     caja_texto["rectangulo"] = pantalla.blit(caja_texto["superficie"],(300, 300))
 
     #textos de cajas y botones
-    funciones_generales.mostrar_texto(caja_texto_mensaje["superficie"],"Igresá tu nombre.\nEntre 1 y 13 caracactéres alfanuméricos",(100,25), constantes.FUENTE_24, constantes.COLOR_NEGRO)
-    funciones_generales.mostrar_texto(boton_enter["superficie"], "Enter", (10, 10), constantes.FUENTE_24, constantes.COLOR_NEGRO)
-    texto_nombre = constantes.FUENTE_24.render(nombre, True, constantes.COLOR_NEGRO)
+
+    funciones_generales.mostrar_texto(caja_texto_mensaje["superficie"],"Igresá tu nombre.\nEntre 1 y 13 caracactéres alfanuméricos",(100,25), constantes.FUENTE_POKEMON_GB, constantes.COLOR_NEGRO)
+    funciones_generales.mostrar_texto(boton_enter["superficie"], "Enter", (10, 10), constantes.FUENTE_POKEMON_GB, constantes.COLOR_NEGRO)
+    texto_nombre = constantes.FUENTE_POKEMON_GB.render(nombre, True, constantes.COLOR_NEGRO)
     pantalla.blit(texto_nombre, (350, 375))
 
-    #texto_mensaje = constantes.FUENTE_24.render("Ingresá tu nombre.", True, constantes.COLOR_NEGRO)
-    #texto_mensaje_2 = constantes.FUENTE_24.render("Hasta 13 caracteres alfanuméricos.", True, constantes.COLOR_NEGRO)
+    #texto_mensaje = constantes.FUENTE_POKEMON_GB.render("Ingresá tu nombre.", True, constantes.COLOR_NEGRO)
+    #texto_mensaje_2 = constantes.FUENTE_POKEMON_GB.render("Hasta 13 caracteres alfanuméricos.", True, constantes.COLOR_NEGRO)
      
     
     #pantalla.blit(texto_mensaje, (150, 150))
