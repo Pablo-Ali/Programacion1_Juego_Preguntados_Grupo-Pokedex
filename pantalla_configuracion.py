@@ -17,7 +17,7 @@ boton_volver = funciones_generales.crear_boton_generico(constantes.RUTA_IMAGEN_B
 boton_mas_musica = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MAS, 100, 100)
 boton_menos_musica = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MENOS, 100, 100)
 boton_mas_efectos = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MAS, 100, 100)
-boton_menos_efectos = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MAS, 100, 100)
+boton_menos_efectos = funciones_generales.crear_boton_generico(constantes.BOTON_SONIDO_MENOS, 100, 100)
 cartel_musica = funciones_generales.crear_boton_generico(constantes.CARTEL_VOLUMEN_MUSICA, 200, 200)
 cartel_efectos = funciones_generales.crear_boton_generico(constantes.CARTEL_VOLUMEN_EFECTOS, 200, 200)
 

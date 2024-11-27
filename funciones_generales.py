@@ -1,7 +1,10 @@
 import pygame
 import random
+import json
 import constantes
 from jugador import Jugador
+from datetime import datetime
+
 
 def mostrar_texto(surface, text, pos, font, color=pygame.Color('black')):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -26,26 +29,26 @@ def mostrar_texto_largo_centrado( surface:pygame.Surface, text:str ):
     max_width, max_height = surface.get_size()
     line_width, line_height = (0,0)
     line_text = ""
-    space = constantes.FUENTE_24.size(' ')[0]
+    space = constantes.FUENTE_POKEMON_GB.size(' ')[0]
     for i in range(len(words)+1):
         if i == (len(words)):
             lines.append({"text":line_text.strip(), "width": line_width - space})
             break
         word = words[i].upper()
-        word_width, word_height = constantes.FUENTE_24.size(word)
+        word_width, word_height = constantes.FUENTE_POKEMON_GB.size(word)
         if line_width + word_width > max_width:
             lines.append({"text":line_text.strip(), "width": line_width - space})
             line_width = word_width
             line_text = word + " "
         else:
-            line_width += word_width + constantes.FUENTE_24.size(' ')[0]
+            line_width += word_width + constantes.FUENTE_POKEMON_GB.size(' ')[0]
             line_text += word + " "
         if word_height > line_height:
             line_height = word_height
     for i in range(len(lines)):
         pos_x = (max_width - lines[i]["width"]) / 2
         pos_y = ((max_height / len(lines)) * i) + ((max_height / len(lines))/2) - (line_height/2)
-        line_surface = constantes.FUENTE_24.render(lines[i]["text"], False, constantes.COLOR_NEGRO)
+        line_surface = constantes.FUENTE_POKEMON_GB.render(lines[i]["text"], False, constantes.COLOR_NEGRO)
         surface.blit(line_surface, (pos_x, pos_y))    
 
 def mezclar_lista(lista:list) -> None:
@@ -102,24 +105,27 @@ def cambiar_volumen_musica(volumen : int) -> None:
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
 
-def cambiar_volumen_efectos(volumen : int) -> None:
-    '''
-    Función que permite modificar el volumen de los efectos
-    de sonido a partir de un entero pasado por parámetro.
-    '''
-    volumen_float = generar_flotante_musica(volumen)
-    pygame.mixer.music.set_volume(volumen_float)
-
-def crear_boton_generico(ruta, ancho, alto) -> dict:
+def crear_boton_generico(surface, ancho, alto) -> dict:
     boton_volver = {}
-    imagen_original = boton_volver["superficie"] = pygame.image.load(ruta)
+    imagen_original = boton_volver["superficie"] = surface
     boton_volver["superficie"] = pygame.transform.scale(imagen_original, (ancho, alto))
     boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
 
     return boton_volver
 
-def mutear():
-    pass
+def generar_fecha() -> str:
+    '''
+    Función que toma la fecha actual y la retorna
+    como una cadena formateada como DD/MM/YYYY
+    '''
+    # Obtén la fecha actual
+    fecha_actual = datetime.now()
+
+    # Formateo
+    fecha_formateada = fecha_actual.strftime("%d/%m/%Y")
+
+    return fecha_formateada
+
 
 def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> bool:
     if pregunta_actual["respuesta_correcta"] == respuesta:
@@ -136,3 +142,40 @@ def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> b
         retorno = False
     
     return retorno
+
+def generar_lista_json(jugador : Jugador) -> list:
+    '''
+    Función que recibe una instancia de la clase Jugador
+    y genera una lista con los datos a guardar en el registro
+    de partidas finalizadas. Retorna la lista.
+    '''
+    fecha = generar_fecha()
+    nombre = jugador.get_nombre()
+    puntos = jugador.get_puntos()
+    
+    return [nombre, puntos, fecha]
+
+
+def registrar_partida_json(jugador: Jugador, nombre_archivo: str) -> bool:
+    '''
+    Función que registra los datos de una partida finalizada en un archivo JSON.
+    Si el archivo ya contiene datos, agrega la nueva partida sin eliminar las existentes.
+    '''
+    nueva_partida = generar_lista_json(jugador)
+
+    try:
+        # Intentamos leer los datos existentes
+        with open(nombre_archivo, "r") as archivo:
+            datos = json.load(archivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Si no existe o está vacío, inicializamos una lista vacía
+        datos = []
+
+    # Agregamos la nueva partida a la lista de datos
+    datos.append(nueva_partida)
+
+    # Sobrescribimos el archivo con la lista actualizada
+    with open(nombre_archivo, "w") as archivo:
+        json.dump(datos, archivo, indent=4)
+
+    return True

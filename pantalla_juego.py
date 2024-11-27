@@ -175,13 +175,71 @@ class Tiempo:
 tiempo = Tiempo(10,10)
 
 
-indice = 0 #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
-contador_correctas = 0
-bandera_respuesta = False #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
+
+
+# class Comodin:
+#     def __init__(self, x:int, y:int, tipo_comodin:int):
+#         if tipo_comodin == constantes.TIPO_COMODIN_X2:
+#             self.superficie = constantes.BOTON_COMODIN_X2
+#             self.superficie_hover = constantes.BOTON_COMODIN_X2_HOVER
+#             self.superficie_activado = constantes.BOTON_COMODIN_X2_ACTIVADO
+#             self.superficie_anulado = constantes.BOTON_COMODIN_X2_ANULADO
+#         elif tipo_comodin == constantes.TIPO_COMODIN_NEXT:
+#             self.superficie = constantes.BOTON_COMODIN_NEXT
+#             self.superficie_hover = constantes.BOTON_COMODIN_NEXT_HOVER
+#             self.superficie_activado = constantes.BOTON_COMODIN_NEXT_ACTIVADO
+#             self.superficie_anulado = constantes.BOTON_COMODIN_NEXT_ANULADO
+#         else:
+#             return TypeError
+#         self.hover = False
+#         self.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
+#         self.pos_x = x
+#         self.pos_y = y
+#     def dibujar(self, superficie:pygame.Surface):
+
+
+#         if bandera_respuesta:
+#             if self.correct:
+#                 superficie.blit(self.superficie_correcta, self.rect)
+#             else:
+#                 superficie.blit(self.superficie_incorrecta, self.rect)
+#         else:
+#             if self.hover:
+#                 superficie.blit(self.superficie_hover, self.rect)
+#             else:
+#                 superficie.blit(self.superficie, self.rect)
+                
+#         texto_renderizado = constantes.FUENTE_POKEMON_GB.render(self.caption, True, constantes.COLOR_NEGRO)
+#         texto_rect = texto_renderizado.get_rect(center=self.rect.center)
+#         superficie.blit(texto_renderizado, texto_rect)
+
+
+#         caption_render = constantes.FUENTE_POKEMON_GB.render(self.caption, True, constantes.COLOR_NEGRO)  
+#         caption_render_rect = caption_render.get_rect()
+#         caption_render_rect.left = self.pos_x
+#         caption_render_rect.top = self.pos_y
+#         superficie.blit(caption_render, caption_render_rect)
+
+
 
 #COMODINES
 # X2
 # PASAR
+
+
+
+
+indice = 0 #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
+contador_correctas = 0
+bandera_respuesta = False #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
+
+
+
+
+
+
+
+
 
 def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador:jugador.Jugador ) -> str:
     global indice
@@ -246,6 +304,7 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
 
     tiempo.setear_tiempo(pygame.time.get_ticks())
     if tiempo.verificar_fin_tiempo():
+        funciones_generales.mezclar_lista(lista_preguntas)
         retorno = "terminado"
     
     intentos.cantidad = jugador.get_vidas()

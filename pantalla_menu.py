@@ -5,8 +5,8 @@ import jugador
 
 class BotonMenu:
     def __init__(self, x:int, y:int, caption:str, retorno:str):
-        self.superficie = constantes.BOTON_MENU_SUP
-        self.superficie_hover = constantes.BOTON_MENU_SUP_HOVER
+        self.superficie = constantes.BOTON_MENU
+        self.superficie_hover = constantes.BOTON_MENU_HOVER
         self.caption = caption
         self.rect = pygame.Rect(0, 0, constantes.BOTON_MENU_ANCHO, constantes.BOTON_MENU_ALTO)
         self.rect.center = (x, y)

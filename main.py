@@ -83,7 +83,7 @@ while corriendo:
             else:
                 pygame.mixer.music.stop()
 
-            pantalla_actual = pantalla_juego.mostrar_juego(pantalla, cola_eventos, jugador )
+            pantalla_actual = pantalla_juego.mostrar_juego(pantalla, cola_eventos, jugador)
 
         case "configuraciones":
             if jugador.get_musica_on():
