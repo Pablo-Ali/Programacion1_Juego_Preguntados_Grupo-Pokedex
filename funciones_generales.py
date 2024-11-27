@@ -102,14 +102,6 @@ def cambiar_volumen_musica(volumen : int) -> None:
     volumen_float = generar_flotante_musica(volumen)
     pygame.mixer.music.set_volume(volumen_float)
 
-def cambiar_volumen_efectos(volumen : int) -> None:
-    '''
-    Función que permite modificar el volumen de los efectos
-    de sonido a partir de un entero pasado por parámetro.
-    '''
-    volumen_float = generar_flotante_musica(volumen)
-    pygame.mixer.music.set_volume(volumen_float)
-
 def crear_boton_generico(ruta, ancho, alto) -> dict:
     boton_volver = {}
     imagen_original = boton_volver["superficie"] = pygame.image.load(ruta)
@@ -118,8 +110,6 @@ def crear_boton_generico(ruta, ancho, alto) -> dict:
 
     return boton_volver
 
-def mutear():
-    pass
 
 def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> bool:
     if pregunta_actual["respuesta_correcta"] == respuesta:
