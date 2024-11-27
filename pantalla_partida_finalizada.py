@@ -7,20 +7,91 @@ pygame.init()
 
 boton_volver = funciones_generales.crear_boton_generico(constantes.RUTA_IMAGEN_BOTON_VOLVER, 108, 108)
 
+caja_texto = funciones_generales.crear_boton_generico(constantes.CAJA_PREGUNTA, 400, 200)
+
+# variables globales
+
+# variable auxiliar para almacenar el nombre
+nombre = ""
+# variables para permitir mantener teclas presionadas
+tecla_presionada = None  # Variable para almacenar la tecla presionada
+tiempo_ultima_ejecucion = 0  # Para controlar la velocidad de repetición
+intervalo_repeticion = 150  # Milisegundos entre repeticiones
+
 def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador : Jugador) -> str:
     pygame.display.set_caption("¿Quién es ese Pokémon?")
     
     retorno = "terminado"
 
+    global nombre, tecla_presionada, tiempo_ultima_ejecucion
+
     for evento in cola_eventos:
+        # capturamos el evento
         if evento.type == pygame.QUIT:
             retorno = "salir"
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 retorno = "menu"
-    
+        elif evento.type == pygame.KEYDOWN:
+            # almacena la tecla que se pulsa
+            tecla_presionada = evento.key
+        elif evento.type == pygame.KEYUP:
+            # libera la tecla pulsada
+            tecla_presionada = None
+
+        # manejamos las teclas presionadas, permitiendo mantener puslado
+        if tecla_presionada is not None:
+            ahora = pygame.time.get_ticks()
+
+            # tomamos el nombre de la tecla presionada
+            nombre_tecla_presionada = pygame.key.name(tecla_presionada)
+
+            if ahora - tiempo_ultima_ejecucion > intervalo_repeticion:
+                    
+                if nombre_tecla_presionada == "space":
+                    if len(nombre) < 12:  # Máximo de 12 caracteres
+                        nombre += " "
+                    else:
+                        funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
+
+                #elif tecla_presionada == pygame.K_BACKSPACE:
+                elif nombre_tecla_presionada == "backspace": # probé con ambas versiones, pero sigo sin poder hacer funcionar el mantener presionado para borrar
+                    if len(nombre) > 0:
+                        nombre = nombre[0:-1] #Me elimina automaticamente el último
+                        pantalla.blit(caja_texto["superficie"], (300, 400))# actualizamos la imagen del cuadro de texto
+                    else:
+                        funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
+                    
+                elif len(nombre_tecla_presionada) == 1:  # Solo procesa letras y caracteres imprimibles
+                    # Detectar si Shift o Caps Lock están activados
+                    shift_presionado = bool(pygame.key.get_mods() & (pygame.KMOD_LSHIFT | pygame.KMOD_RSHIFT))
+                    bloc_mayus = bool(pygame.key.get_mods() & pygame.KMOD_CAPS)
+
+                    # Combinar Shift y Caps Lock para determinar el caso
+                    if len(nombre) < 13:
+                        if shift_presionado ^ bloc_mayus:  # XOR para alternar entre mayúsculas y minúsculas
+                            nombre += nombre_tecla_presionada.upper()
+                        else:
+                            nombre += nombre_tecla_presionada.lower()
+                    else:
+                        funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
+                elif nombre_tecla_presionada == "return":
+                    pass
+                
+                # Actualizamos el tiempo de última ejecución después de cualquier acción
+                tiempo_ultima_ejecucion = ahora
+                #print(nombre_tecla_presionada)
 
     pantalla.blit(constantes.FONDO_CONFIGURACIONES, (0, 0))
+    
+    #pantalla.blit(caja_texto["superficie"], (300, 100))
+    caja_texto["rectangulo"] = pantalla.blit(caja_texto["superficie"],(300,100))
+
+    texto_nombre = constantes.FUENTE_24.render(nombre, True, constantes.COLOR_NEGRO)
+    
+    pantalla.blit(texto_nombre, (350, 175))
+    #funciones_generales.mostrar_texto(caja_texto["superficie"],nombre,(20,50), constantes.FUENTE_24, constantes.COLOR_NEGRO)
 
     boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],constantes.POS_BOTON_VOLVER)
+    
     return retorno
