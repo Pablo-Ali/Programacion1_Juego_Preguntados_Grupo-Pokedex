@@ -10,11 +10,16 @@ ALTO = 700
 VENTANA = (ANCHO,ALTO)
 FPS = 60
 POS_BOTON_VOLVER = (875, 25)
-ICON_PATH = "recursos/imagenes/iconos/pokeball.png"
+ICON_PATH = pygame.image.load("recursos/imagenes/iconos/pokeball.png")
+
 
 CANTIDAD_VIDAS = 6
 PUNTUACION_ACIERTO = 100
 PUNTUACION_ERROR = 25
+TIEMPO_INICIAL = 30     #SEGUNDOS
+TIEMPO_INCREMENTO = 10   #SEGUNDOS
+
+FUENTE_POKEMON_GB = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",24)
 
 FUENTE_24 = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",24)
 
@@ -22,48 +27,61 @@ SELECT_SOUND = "recursos/audio/sonidos/select.mp3"
 SELECT_OK_SOUND = "recursos/audio/sonidos/correct.mp3"
 SELECT_FAIL_SOUND = "recursos/audio/sonidos/fail.mp3"
 
-
 #########################################################
 # PANTALLA MENU
 #########################################################
 # - FONDOS
 FONDO_MENU = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondos/pantalla_menu.jpg"), VENTANA)
 FONDO_MENU_TITLE =  pygame.image.load("recursos/imagenes/fondos/title.png")
-
+FONDO_MENU_TITLE_ANCHO = FONDO_MENU_TITLE.get_width()
+FONDO_MENU_TITLE_ALTO = FONDO_MENU_TITLE.get_height()
 # - BOTONES
-BOTON_MENU_ANCHO = 200
-BOTON_MENU_ALTO = 70
-
-BOTON_JUGAR = 0
-BOTON_CONFIG = 1
-BOTON_RANKINGS = 2
-BOTON_SALIR = 3
-
-BOTON_SMALL = "recursos/imagenes/botones/small_buttom.png"
-BOTON_SMALL_HOVER = "recursos/imagenes/botones/small_buttom_hover.png"
-
-SPRITES = "recursos/imagenes/sprites/sprites.png"
-
+BOTON_MENU_SUP = pygame.image.load("recursos/imagenes/botones/small_buttom.png") 
+BOTON_MENU_SUP_HOVER = pygame.image.load("recursos/imagenes/botones/small_buttom_hover.png") 
+BOTON_MENU_ANCHO = BOTON_MENU_SUP.get_width()
+BOTON_MENU_ALTO = BOTON_MENU_SUP.get_height()
 # - MUSICA
 MUSICA_MENU = "recursos/audio/musica/pantalla_menu.mp3"
 
 #########################################################
 # PANTALLA JUEGO
 #########################################################
-
-CAJA_PREGUNTA =  "recursos/imagenes/botones/question.png"
-BOTON_LARGE = "recursos/imagenes/botones/large_buttom.png"
-BOTON_LARGE_HOVER = "recursos/imagenes/botones/large_buttom_hover.png"
-BOTON_LARGE_RED = "recursos/imagenes/botones/large_buttom_red.png"
-BOTON_LARGE_GREEN = "recursos/imagenes/botones/large_buttom_green.png"
-
 # - FONDOS
 FONDO_JUEGO = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondos/pantalla_juego.png"), VENTANA)
+# - BOTONES
+BOTON_JUEGO_SUP = pygame.image.load("recursos/imagenes/botones/large_buttom.png") 
+BOTON_JUEGO_SUP_HOVER = pygame.image.load("recursos/imagenes/botones/large_buttom_hover.png") 
+BOTON_JUEGO_SUP_CORRECT = pygame.image.load("recursos/imagenes/botones/large_buttom_green.png") 
+BOTON_JUEGO_SUP_INCORRECT = pygame.image.load("recursos/imagenes/botones/large_buttom_red.png") 
+BOTON_JUEGO_ANCHO = BOTON_JUEGO_SUP.get_width()
+BOTON_JUEGO_ALTO = BOTON_JUEGO_SUP.get_height()
+
+CAJA_PREGUNTA = pygame.image.load("recursos/imagenes/botones/question.png")
+CAJA_PREGUNTA_ANCHO = CAJA_PREGUNTA.get_width()
+CAJA_PREGUNTA_ALTO = CAJA_PREGUNTA.get_height()
+
+SPRITES = pygame.image.load("recursos/imagenes/sprites/sprites.png")  
+
+PREGUNTAS_PATH =  "recursos/config/preguntas.csv"
 
 # - MUSICA
 MUSICA_JUEGO = "recursos/audio/musica/pantalla_juego.mp3"
 
 
+
+# CAJA_PREGUNTA =  "recursos/imagenes/botones/question.png"
+# BOTON_LARGE = "recursos/imagenes/botones/large_buttom.png"
+# BOTON_LARGE_HOVER = "recursos/imagenes/botones/large_buttom_hover.png"
+# BOTON_LARGE_RED = "recursos/imagenes/botones/large_buttom_red.png"
+# BOTON_LARGE_GREEN = "recursos/imagenes/botones/large_buttom_green.png"
+
+# # - FONDOS
+# FONDO_JUEGO = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondos/pantalla_juego.png"), VENTANA)
+
+# # - MUSICA
+# MUSICA_JUEGO = "recursos/audio/musica/pantalla_juego.mp3"
+
+# SPRITES = "recursos/imagenes/sprites/sprites.png"
 
 
 
