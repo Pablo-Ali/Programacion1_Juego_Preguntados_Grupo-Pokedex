@@ -1,7 +1,10 @@
 import pygame
 import random
+import json
 import constantes
 from jugador import Jugador
+from datetime import datetime
+
 
 def mostrar_texto(surface, text, pos, font, color=pygame.Color('black')):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -110,6 +113,19 @@ def crear_boton_generico(ruta, ancho, alto) -> dict:
 
     return boton_volver
 
+def generar_fecha() -> str:
+    '''
+    Función que toma la fecha actual y la retorna
+    como una cadena formateada como DD/MM/YYYY
+    '''
+    # Obtén la fecha actual
+    fecha_actual = datetime.now()
+
+    # Formateo
+    fecha_formateada = fecha_actual.strftime("%d/%m/%Y")
+
+    return fecha_formateada
+
 
 def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> bool:
     if pregunta_actual["respuesta_correcta"] == respuesta:
@@ -126,3 +142,40 @@ def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> b
         retorno = False
     
     return retorno
+
+def generar_lista_json(jugador : Jugador) -> list:
+    '''
+    Función que recibe una instancia de la clase Jugador
+    y genera una lista con los datos a guardar en el registro
+    de partidas finalizadas. Retorna la lista.
+    '''
+    fecha = generar_fecha()
+    nombre = jugador.get_nombre()
+    puntos = jugador.get_puntos()
+    
+    return [nombre, puntos, fecha]
+
+
+def registrar_partida_json(jugador: Jugador, nombre_archivo: str) -> bool:
+    '''
+    Función que registra los datos de una partida finalizada en un archivo JSON.
+    Si el archivo ya contiene datos, agrega la nueva partida sin eliminar las existentes.
+    '''
+    nueva_partida = generar_lista_json(jugador)
+
+    try:
+        # Intentamos leer los datos existentes
+        with open(nombre_archivo, "r") as archivo:
+            datos = json.load(archivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Si no existe o está vacío, inicializamos una lista vacía
+        datos = []
+
+    # Agregamos la nueva partida a la lista de datos
+    datos.append(nueva_partida)
+
+    # Sobrescribimos el archivo con la lista actualizada
+    with open(nombre_archivo, "w") as archivo:
+        json.dump(datos, archivo, indent=4)
+
+    return True
