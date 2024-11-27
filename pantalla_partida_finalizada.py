@@ -17,7 +17,7 @@ nombre = ""
 # variables para permitir mantener teclas presionadas
 tecla_presionada = None  # Variable para almacenar la tecla presionada
 tiempo_ultima_ejecucion = 0  # Para controlar la velocidad de repetición
-intervalo_repeticion = 150  # Milisegundos entre repeticiones
+intervalo_repeticion = 50  # Milisegundos entre repeticiones
 
 def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador : Jugador) -> str:
     pygame.display.set_caption("¿Quién es ese Pokémon?")
@@ -34,9 +34,14 @@ def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 retorno = "menu"
             elif boton_enter["rectangulo"].collidepoint(evento.pos):
-                if len(nombre) > 1:
+                if len(nombre) > 0:
                     jugador.set_nombre(nombre)
                     if funciones_generales.registrar_partida_json(jugador, "prueba"):
+                        jugador.set_nombre("")
+                        jugador.set_vidas(constantes.CANTIDAD_VIDAS)
+                        jugador.set_puntos(0)
+                        jugador.set_comodin_pasar(True)
+                        jugador.set_comodin_x2(True)
                         retorno = "menu"
                 else:
                     funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
@@ -84,9 +89,14 @@ def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame
                     else:
                         funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
                 elif nombre_tecla_presionada == "return":
-                    if len(nombre) > 1:
+                    if len(nombre) > 0:
                         jugador.set_nombre(nombre)
                         if funciones_generales.registrar_partida_json(jugador, "prueba"):
+                            jugador.set_nombre("")
+                            jugador.set_vidas(constantes.CANTIDAD_VIDAS)
+                            jugador.set_puntos(0)
+                            jugador.set_comodin_pasar(True)
+                            jugador.set_comodin_x2(True)
                             retorno = "menu"
                     else:
                         funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
