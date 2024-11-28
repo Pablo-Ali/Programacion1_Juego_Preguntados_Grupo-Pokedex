@@ -27,11 +27,19 @@ def mostrar_rankings(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Eve
 
     pantalla.blit(constantes.FONDO_RANKINGS, (0, 0))
 
-    # generamos en pantalla el botón de volver y la tabla del ranking
+    # generamos en pantalla el botón de volver
     boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],constantes.POS_BOTON_VOLVER)
-    tabla["rectangulo"] = pantalla.blit(tabla["superficie"], (25, 25))
- 
+
+    # Dibjar los carteles en cada iteración para evitar superposición
+    pantalla.blit(tabla["superficie"], (25, 25))
+
+        # Limpiar la superficie de la tabla
+    tabla["superficie"].blit(tabla["superficie"], (0, 0))
+    
     # imprimimos el ranking
     funciones_generales.mostrar_ranking(lista_ranking, tabla["superficie"])
+
+    # Actualizar pantalla principal
+    pygame.display.flip()
 
     return retorno
