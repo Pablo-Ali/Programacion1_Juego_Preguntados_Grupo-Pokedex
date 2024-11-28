@@ -210,7 +210,9 @@ def mostrar_ranking(lista_ranking : list, superficie : pygame.Surface, pantalla 
     '''
 
     if len(lista_ranking) == 0:
-        mostrar_texto(superficie, "Aún no hay registros", (200, 50), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
+        texto = constantes.FUENTE_POKEMON_GB_16.render("Aún no hay registros", True, constantes.COLOR_NEGRO)
+        pantalla.blit(texto, (200, 50))
+        #mostrar_texto(superficie, "Aún no hay registros", (200, 50), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
     else:
         # Definimos la posición inicial
         posicion_x = 75
