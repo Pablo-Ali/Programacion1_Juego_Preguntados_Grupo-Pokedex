@@ -13,7 +13,7 @@ def mostrar_rankings(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Eve
     retorno = "rankings"
 
     # ordenamos el archivo json
-    lista_ranking = funciones_generales.leer_json("prueba")
+    lista_ranking = funciones_generales.leer_json("partidas.json")
 
     #ordenamos la lista
     funciones_generales.ordenar_matrices_segun_columna_descendente(lista_ranking, 1)
@@ -32,12 +32,9 @@ def mostrar_rankings(pantalla:pygame.Surface, cola_eventos:list[pygame.event.Eve
 
     # Dibjar los carteles en cada iteración para evitar superposición
     pantalla.blit(tabla["superficie"], (25, 25))
-
-        # Limpiar la superficie de la tabla
-    tabla["superficie"].blit(tabla["superficie"], (0, 0))
-    
+ 
     # imprimimos el ranking
-    funciones_generales.mostrar_ranking(lista_ranking, tabla["superficie"])
+    funciones_generales.mostrar_ranking(lista_ranking, tabla["superficie"], pantalla)
 
     # Actualizar pantalla principal
     pygame.display.flip()

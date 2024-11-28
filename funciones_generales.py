@@ -202,7 +202,7 @@ def ordenar_matrices_segun_columna_descendente(matriz : list, columna : int) -> 
                 matriz[i + 1] = aux
                 flag = 1
 
-def mostrar_ranking(lista_ranking : list, superficie : pygame.Surface) -> None:
+def mostrar_ranking(lista_ranking : list, superficie : pygame.Surface, pantalla : pygame.Surface) -> None:
     '''
     Función que recibe una lista de listas con los rankings y una superficie.
     Muestra en la superficie un máximo del 10 jugadores. En caso de no haber,
@@ -225,4 +225,6 @@ def mostrar_ranking(lista_ranking : list, superficie : pygame.Surface) -> None:
             posicion_y = posicion_y_inicial + i * espacio_entre_lineas
 
             # Dibujamos el texto correspondiente al elemento actual
-            mostrar_texto(superficie, f"{i+1} - {lista_ranking[i][0]} {lista_ranking[i][1]} {lista_ranking[i][2]}", (posicion_x, posicion_y), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
+            #mostrar_texto(superficie, f"{i+1} - {lista_ranking[i][0]} {lista_ranking[i][1]} {lista_ranking[i][2]}", (posicion_x, posicion_y), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
+            texto = constantes.FUENTE_POKEMON_GB_16.render(f"{i+1} - {lista_ranking[i][0]} {lista_ranking[i][1]} {lista_ranking[i][2]}", True, constantes.COLOR_NEGRO)
+            pantalla.blit(texto, (posicion_x, posicion_y))
