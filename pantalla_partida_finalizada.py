@@ -38,7 +38,7 @@ def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame
             elif boton_enter["rectangulo"].collidepoint(evento.pos):
                 if len(nombre) > 0:
                     jugador.set_nombre(nombre)
-                    if funciones_generales.registrar_partida_json(jugador, "prueba"):
+                    if funciones_generales.registrar_partida_json(jugador, "partidas.json"):
                         nombre = "" # para que se limpie el cartel al volver a entrar a la pantalla
                         jugador.set_nombre(nombre)
                         jugador.set_vidas(constantes.CANTIDAD_VIDAS)
@@ -94,7 +94,7 @@ def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame
                 elif nombre_tecla_presionada == "return":
                     if len(nombre) > 0:
                         jugador.set_nombre(nombre)
-                        if funciones_generales.registrar_partida_json(jugador, "prueba"):
+                        if funciones_generales.registrar_partida_json(jugador, "partidas.json"):
                             nombre = ""
                             jugador.set_nombre(nombre)
                             jugador.set_vidas(constantes.CANTIDAD_VIDAS)
