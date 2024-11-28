@@ -174,72 +174,44 @@ class Tiempo:
 
 tiempo = Tiempo(10,10)
 
-
-
-
-# class Comodin:
-#     def __init__(self, x:int, y:int, tipo_comodin:int):
-#         if tipo_comodin == constantes.TIPO_COMODIN_X2:
-#             self.superficie = constantes.BOTON_COMODIN_X2
-#             self.superficie_hover = constantes.BOTON_COMODIN_X2_HOVER
-#             self.superficie_activado = constantes.BOTON_COMODIN_X2_ACTIVADO
-#             self.superficie_anulado = constantes.BOTON_COMODIN_X2_ANULADO
-#         elif tipo_comodin == constantes.TIPO_COMODIN_NEXT:
-#             self.superficie = constantes.BOTON_COMODIN_NEXT
-#             self.superficie_hover = constantes.BOTON_COMODIN_NEXT_HOVER
-#             self.superficie_activado = constantes.BOTON_COMODIN_NEXT_ACTIVADO
-#             self.superficie_anulado = constantes.BOTON_COMODIN_NEXT_ANULADO
-#         else:
-#             return TypeError
-#         self.hover = False
-#         self.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
-#         self.pos_x = x
-#         self.pos_y = y
-#     def dibujar(self, superficie:pygame.Surface):
-
-
-#         if bandera_respuesta:
-#             if self.correct:
-#                 superficie.blit(self.superficie_correcta, self.rect)
-#             else:
-#                 superficie.blit(self.superficie_incorrecta, self.rect)
-#         else:
-#             if self.hover:
-#                 superficie.blit(self.superficie_hover, self.rect)
-#             else:
-#                 superficie.blit(self.superficie, self.rect)
+class Comodin:
+    def __init__(self, x:int, y:int, tipo_comodin:int):
+        if tipo_comodin == constantes.BOTON_TIPO_COMODIN_X2:
+            self.superficie = constantes.BOTON_COMODIN_X2
+            self.superficie_hover = constantes.BOTON_COMODIN_X2_HOVER
+            self.superficie_activado = constantes.BOTON_COMODIN_X2_ACTIVADO
+            self.superficie_anulado = constantes.BOTON_COMODIN_X2_ANULADO
+        elif tipo_comodin == constantes.BOTON_TIPO_COMODIN_NEXT:
+            self.superficie = constantes.BOTON_COMODIN_NEXT
+            self.superficie_hover = constantes.BOTON_COMODIN_NEXT_HOVER
+            self.superficie_activado = constantes.BOTON_COMODIN_NEXT_ACTIVADO
+            self.superficie_anulado = constantes.BOTON_COMODIN_NEXT_ANULADO
+        else:
+            return TypeError
+        self.hover = False
+        self.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
+        self.pos_x = x
+        self.pos_y = y
+        self.rect = self.superficie.get_rect()
+    def dibujar(self, superficie:pygame.Surface):
+        self.rect.left = self.pos_x
+        self.rect.top = self.pos_y
+        if self.estado == constantes.BOTON_COMODIN_ESTADO_EN_ESPERA:
+            if self.hover:
+                superficie.blit(self.superficie_hover, self.rect)
+            else:
+                superficie.blit(self.superficie, self.rect)
+        elif self.estado == constantes.BOTON_COMODIN_ESTADO_ACTIVADO:
+            superficie.blit(self.superficie_activado, self.rect)
+        elif self.estado == constantes.BOTON_COMODIN_ESTADO_ANULADO:
+            superficie.blit(self.superficie_anulado, self.rect)
                 
-#         texto_renderizado = constantes.FUENTE_POKEMON_GB.render(self.caption, True, constantes.COLOR_NEGRO)
-#         texto_rect = texto_renderizado.get_rect(center=self.rect.center)
-#         superficie.blit(texto_renderizado, texto_rect)
-
-
-#         caption_render = constantes.FUENTE_POKEMON_GB.render(self.caption, True, constantes.COLOR_NEGRO)  
-#         caption_render_rect = caption_render.get_rect()
-#         caption_render_rect.left = self.pos_x
-#         caption_render_rect.top = self.pos_y
-#         superficie.blit(caption_render, caption_render_rect)
-
-
-
-#COMODINES
-# X2
-# PASAR
-
-
-
+comodin_next = Comodin(constantes.ANCHO - constantes.BOTON_COMODIN_ANCHO - 1, constantes.ALTO - constantes.CAJA_PREGUNTA_ALTO - constantes.BOTON_COMODIN_ALTO - 14, constantes.BOTON_TIPO_COMODIN_NEXT)
+comodin_X2 = Comodin(constantes.ANCHO - (constantes.BOTON_COMODIN_ANCHO * 2) - 5, constantes.ALTO - constantes.CAJA_PREGUNTA_ALTO - constantes.BOTON_COMODIN_ALTO - 14, constantes.BOTON_TIPO_COMODIN_X2)
 
 indice = 0 #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
 contador_correctas = 0
 bandera_respuesta = False #Todo dato inmutable en la funcion que muestra esa ventana, lo tengo que definir como global
-
-
-
-
-
-
-
-
 
 def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event], jugador:jugador.Jugador ) -> str:
     global indice
@@ -264,18 +236,28 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
                 boton.hover = False
                 if boton.rect.collidepoint(evento.pos):
                     boton.hover = True
+            
+            comodin_next.hover = False
+            if comodin_next.rect.collidepoint(evento.pos):
+                comodin_next.hover = True
+                
+            comodin_X2.hover = False
+            if comodin_X2.rect.collidepoint(evento.pos):
+                comodin_X2.hover = True                
+                
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(lista_botones)):
                 boton = lista_botones[i]
                 if boton.rect.collidepoint(evento.pos):
                     respuesta_seleccionada = (i + 1)
-                    if funciones_generales.verificar_respuesta( jugador, pregunta_actual, respuesta_seleccionada ):
+                    multiplicador = 2 if comodin_X2.estado == constantes.BOTON_COMODIN_ESTADO_ACTIVADO else 1
+                    if funciones_generales.verificar_respuesta( jugador, pregunta_actual, respuesta_seleccionada, multiplicador ):
                         # print("RESPUESTA CORRECTA")
                         funciones_generales.reproducir_efecto_sonido(constantes.SELECT_OK_SOUND, jugador.get_volumen_efectos())
                         contador_correctas += 1
                         if contador_correctas == 5:
                             tiempo.incrementar_tiempo()
-                            if jugador.get_vidas() < constantes.CANTIDAD_VIDAS:
+                            if jugador.get_vidas() < constantes.CANTIDAD_VIDAS_MAX:
                                  jugador.set_vidas(jugador.get_vidas() + 1)
                             contador_correctas = 0
                     else:
@@ -284,8 +266,13 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
                         contador_correctas = 0
                         if jugador.get_vidas() == 0:
                             tiempo.limpiar_tiempo()
+                            comodin_next.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
+                            comodin_X2.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
                             funciones_generales.mezclar_lista(lista_preguntas)
                             retorno = "terminado"
+
+                    if comodin_X2.estado == constantes.BOTON_COMODIN_ESTADO_ACTIVADO:
+                        comodin_X2.estado = constantes.BOTON_COMODIN_ESTADO_ANULADO    
 
                     indice +=1
 
@@ -294,6 +281,20 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
                         # mezclar_lista(lista_preguntas)
 
                     bandera_respuesta = True
+            
+            if comodin_next.rect.collidepoint(evento.pos):
+                if comodin_next.estado == constantes.BOTON_COMODIN_ESTADO_EN_ESPERA:
+                    indice +=1
+                    if indice == len(lista_preguntas):
+                        indice = 0
+                    comodin_next.estado = constantes.BOTON_COMODIN_ESTADO_ANULADO
+            if comodin_X2.rect.collidepoint(evento.pos):
+                if comodin_X2.estado == constantes.BOTON_COMODIN_ESTADO_EN_ESPERA:
+                    comodin_X2.estado = constantes.BOTON_COMODIN_ESTADO_ACTIVADO
+                elif comodin_X2.estado == constantes.BOTON_COMODIN_ESTADO_ACTIVADO:
+                    comodin_X2.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA                    
+
+
 
     #     elif evento.type == pygame.MOUSEBUTTONDOWN: ### BOTÓN VOLVER ###################
     #         if boton_volver["rectangulo"].collidepoint(evento.pos): ### BOTÓN VOLVER ###
@@ -304,6 +305,8 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
 
     tiempo.setear_tiempo(pygame.time.get_ticks())
     if tiempo.verificar_fin_tiempo():
+        comodin_X2.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
+        comodin_next.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
         funciones_generales.mezclar_lista(lista_preguntas)
         retorno = "terminado"
     
@@ -336,6 +339,10 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
     puntaje.dibujar(pantalla)
 
     intentos.dibujar(pantalla)
+
+    comodin_next.dibujar(pantalla)
+
+    comodin_X2.dibujar(pantalla)
 
     pregunta.dibujar(pantalla)
 

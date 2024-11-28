@@ -25,10 +25,10 @@ class Jugador:
         return self.volumen_efectos
     def get_musica_on(self):
         return self.musica_on
-    def get_comodin_x2(self):
-        return self.comodin_x2
-    def get_comodin_pasar(self):
-        return self.comodin_pasar
+    # def get_comodin_x2(self):
+    #     return self.comodin_x2
+    # def get_comodin_pasar(self):
+    #     return self.comodin_pasar
     
     # Setters
     def set_nombre(self, nombre):
@@ -43,8 +43,8 @@ class Jugador:
         self.volumen_efectos = volumen_efectos
     def set_musica_on(self, musica_on):
         self.musica_on = musica_on
-    def set_comodin_x2(self, comodin_x2):
-        self.comodin_x2 = comodin_x2
-    def set_comodin_pasar(self, comodin_pasar):
-        self.comodin_pasar = comodin_pasar
+    # def set_comodin_x2(self, comodin_x2):
+    #     self.comodin_x2 = comodin_x2
+    # def set_comodin_pasar(self, comodin_pasar):
+    #     self.comodin_pasar = comodin_pasar
 
