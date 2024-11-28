@@ -202,12 +202,13 @@ def ordenar_matrices_segun_columna_descendente(matriz : list, columna : int) -> 
                 matriz[i + 1] = aux
                 flag = 1
 
-def mostrar_ranking(lista_ranking : list, superficie) -> None:
+def mostrar_ranking(lista_ranking : list, superficie : pygame.Surface) -> None:
     '''
     Función que recibe una lista de listas con los rankings y una superficie.
     Muestra en la superficie un máximo del 10 jugadores. En caso de no haber,
     lo informa.
     '''
+
     if len(lista_ranking) == 0:
         mostrar_texto(superficie, "Aún no hay registros", (200, 50), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
     else:
