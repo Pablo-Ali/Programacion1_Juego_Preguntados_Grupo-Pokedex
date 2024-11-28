@@ -307,6 +307,7 @@ def mostrar_juego( pantalla:pygame.Surface, cola_eventos:list[pygame.event.Event
     if tiempo.verificar_fin_tiempo():
         comodin_X2.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
         comodin_next.estado = constantes.BOTON_COMODIN_ESTADO_EN_ESPERA
+        contador_correctas = 0
         funciones_generales.mezclar_lista(lista_preguntas)
         retorno = "terminado"
     
