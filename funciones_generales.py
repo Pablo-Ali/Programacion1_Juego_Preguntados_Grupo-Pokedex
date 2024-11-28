@@ -131,9 +131,9 @@ def generar_fecha() -> str:
     return fecha_formateada
 
 
-def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int) -> bool:
+def verificar_respuesta(jugador:Jugador,pregunta_actual:dict,respuesta:int, multiplicador:int = 1) -> bool:
     if pregunta_actual["respuesta_correcta"] == respuesta:
-        jugador.set_puntos(jugador.get_puntos() + constantes.PUNTUACION_ACIERTO)
+        jugador.set_puntos(jugador.get_puntos() + (constantes.PUNTUACION_ACIERTO * multiplicador))
         retorno = True
     else:
         #SIN PUNTOS NEGATIVOS

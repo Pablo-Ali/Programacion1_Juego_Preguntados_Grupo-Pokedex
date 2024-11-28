@@ -13,6 +13,7 @@ POS_BOTON_VOLVER = (875, 25)
 ICON_PATH = pygame.image.load("recursos/imagenes/iconos/pokeball.png")
 
 CANTIDAD_VIDAS = 3
+CANTIDAD_VIDAS_MAX = 6
 PUNTUACION_ACIERTO = 100
 PUNTUACION_ERROR = 25
 TIEMPO_INICIAL = 30     #SEGUNDOS
@@ -48,6 +49,13 @@ MUSICA_MENU = "recursos/audio/musica/pantalla_menu.mp3"
 # - FONDOS
 FONDO_JUEGO = pygame.transform.scale(pygame.image.load("recursos/imagenes/fondos/pantalla_juego.png"), VENTANA)
 # - BOTONES
+BOTON_TIPO_COMODIN_X2 = 1
+BOTON_TIPO_COMODIN_NEXT = 2
+
+BOTON_COMODIN_ESTADO_EN_ESPERA = 0
+BOTON_COMODIN_ESTADO_ACTIVADO = 1
+BOTON_COMODIN_ESTADO_ANULADO = 2
+
 BOTON_COMODIN_X2 = pygame.image.load("recursos/imagenes/botones/comodin_x2.png") 
 BOTON_COMODIN_X2_HOVER = pygame.image.load("recursos/imagenes/botones/comodin_x2_hover.png")
 BOTON_COMODIN_X2_ACTIVADO = pygame.image.load("recursos/imagenes/botones/comodin_x2_enabled.png")
@@ -57,6 +65,9 @@ BOTON_COMODIN_NEXT = pygame.image.load("recursos/imagenes/botones/comodin_next.p
 BOTON_COMODIN_NEXT_HOVER = pygame.image.load("recursos/imagenes/botones/comodin_next_hover.png")
 BOTON_COMODIN_NEXT_ACTIVADO = pygame.image.load("recursos/imagenes/botones/comodin_next_enabled.png")
 BOTON_COMODIN_NEXT_ANULADO = pygame.image.load("recursos/imagenes/botones/comodin_next_disabled.png")
+
+BOTON_COMODIN_ANCHO = BOTON_COMODIN_X2.get_width()
+BOTON_COMODIN_ALTO = BOTON_COMODIN_X2.get_height()
 
 BOTON_JUEGO_SUP = pygame.image.load("recursos/imagenes/botones/large_buttom.png") 
 BOTON_JUEGO_SUP_HOVER = pygame.image.load("recursos/imagenes/botones/large_buttom_hover.png") 
