@@ -101,11 +101,7 @@ def mostrar_partida_finalizada(pantalla:pygame.Surface, cola_eventos:list[pygame
                         jugador.set_nombre(nombre)
                         if funciones_generales.registrar_partida_json(jugador, "partidas.json"):
                             nombre = ""
-                            jugador.set_nombre(nombre)
-                            jugador.set_vidas(constantes.CANTIDAD_VIDAS)
-                            jugador.set_puntos(0)
-                            jugador.set_comodin_pasar(True)
-                            jugador.set_comodin_x2(True)
+                            reiniciar_perfil_jugador(jugador)
                             retorno = "menu"
                     else:
                         funciones_generales.reproducir_efecto_sonido(constantes.SELECT_FAIL_SOUND, jugador.get_volumen_efectos())
