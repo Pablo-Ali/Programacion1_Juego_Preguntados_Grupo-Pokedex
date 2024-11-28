@@ -12,13 +12,15 @@ FPS = 60
 POS_BOTON_VOLVER = (875, 25)
 ICON_PATH = pygame.image.load("recursos/imagenes/iconos/pokeball.png")
 
-CANTIDAD_VIDAS = 6
+CANTIDAD_VIDAS = 3
 PUNTUACION_ACIERTO = 100
 PUNTUACION_ERROR = 25
 TIEMPO_INICIAL = 30     #SEGUNDOS
 TIEMPO_INCREMENTO = 10   #SEGUNDOS
 
 FUENTE_POKEMON_GB = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",24)
+
+FUENTE_POKEMON_GB_16 = pygame.font.Font("recursos/fuentes/Pokemon_GB.ttf",16)
 
 SELECT_SOUND = "recursos/audio/sonidos/select.mp3"
 SELECT_OK_SOUND = "recursos/audio/sonidos/correct.mp3"
