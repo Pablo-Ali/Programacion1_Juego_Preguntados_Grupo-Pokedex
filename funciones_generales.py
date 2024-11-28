@@ -1,6 +1,7 @@
 import pygame
 import random
 import json
+import os
 import constantes
 from jugador import Jugador
 from datetime import datetime
@@ -159,6 +160,14 @@ def generar_lista_json(jugador : Jugador) -> list:
     return [nombre, puntos, fecha]
 
 
+def leer_json(nombre_archivo : str) -> list:
+    if os.path.exists(nombre_archivo):
+        with open(nombre_archivo, "r") as archivo:
+            lista = json.load(archivo)
+        return lista
+    else:
+        return []
+
 def registrar_partida_json(jugador: Jugador, nombre_archivo: str) -> bool:
     '''
     Función que registra los datos de una partida finalizada en un archivo JSON.
@@ -166,13 +175,7 @@ def registrar_partida_json(jugador: Jugador, nombre_archivo: str) -> bool:
     '''
     nueva_partida = generar_lista_json(jugador)
 
-    try:
-        # Intentamos leer los datos existentes
-        with open(nombre_archivo, "r") as archivo:
-            datos = json.load(archivo)
-    except (FileNotFoundError, json.JSONDecodeError):
-        # Si no existe o está vacío, inicializamos una lista vacía
-        datos = []
+    datos = leer_json(nombre_archivo)
 
     # Agregamos la nueva partida a la lista de datos
     datos.append(nueva_partida)
@@ -182,3 +185,43 @@ def registrar_partida_json(jugador: Jugador, nombre_archivo: str) -> bool:
         json.dump(datos, archivo, indent=4)
 
     return True
+
+def ordenar_matrices_segun_columna_descendente(matriz : list, columna : int) -> None:
+    '''
+    Función que recibe una matriz y un entero que representa una de sus columnas.
+    Ordena esa matriz de mayor a menor.
+    '''
+    flag = 1
+    
+    while flag:
+        flag = 0
+        for i in range (len(matriz) - 1):
+            if  matriz[i][columna] < matriz[i + 1][columna]:
+                aux = matriz[i]
+                matriz[i] = matriz[i + 1]
+                matriz[i + 1] = aux
+                flag = 1
+
+def mostrar_ranking(lista_ranking : list, superficie) -> None:
+    '''
+    Función que recibe una lista de listas con los rankings y una superficie.
+    Muestra en la superficie un máximo del 10 jugadores. En caso de no haber,
+    lo informa.
+    '''
+    if len(lista_ranking) == 0:
+        mostrar_texto(superficie, "Aún no hay registros", (200, 50), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
+    else:
+        # Definimos la posición inicial
+        posicion_x = 75
+        posicion_y_inicial = 100
+        espacio_entre_lineas = 50  # Espacio entre cada línea
+
+        # Dibujamos el encabezado
+        mostrar_texto(superficie, "Nombre       Puntos       Fecha", (75, 50), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)
+
+        for i in range(min(len(lista_ranking), 10)): # toma el rango menor, con límita máximo en 10
+            # Calculamos la posición vertical actual
+            posicion_y = posicion_y_inicial + i * espacio_entre_lineas
+
+            # Dibujamos el texto correspondiente al elemento actual
+            mostrar_texto(superficie, f"{i+1} - {lista_ranking[i][0]} {lista_ranking[i][1]} {lista_ranking[i][2]}", (posicion_x, posicion_y), constantes.FUENTE_POKEMON_GB_16, constantes.COLOR_NEGRO)

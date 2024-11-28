@@ -8,7 +8,7 @@ pygame.init()
 boton_volver = funciones_generales.crear_boton_generico(constantes.RUTA_IMAGEN_BOTON_VOLVER, 108, 108)
 #boton_enter = funciones_generales.crear_boton_generico(constantes.BOTON_SMALL, 140, 50)
 
-boton_enter = funciones_generales.crear_boton_generico(constantes.BOTON_SMALL, 140, 50)
+boton_enter = funciones_generales.crear_boton_generico(constantes.BOTON_MENU, 140, 50)
 caja_texto = funciones_generales.crear_boton_generico(constantes.CAJA_PREGUNTA, 400, 200)
 caja_texto_mensaje = funciones_generales.crear_boton_generico(constantes.CAJA_PREGUNTA, 600, 200)
 
